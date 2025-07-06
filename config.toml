@@ -135,7 +135,7 @@ theme = "LoveIt"
     # whether to omit favicon resource links
     noFavicon = false
     # modern SVG favicon to use in place of older style .ico
-    svgFavicon = ""
+    svgFavicon = "/app_icon.svg"
     # Android browser theme color
     themeColor = "#ffffff"
     # Safari mask icon color
