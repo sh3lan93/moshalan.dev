@@ -62,7 +62,7 @@ theme = "LoveIt"
   dateFormat = "2006-01-02"
 
   # website title for Open Graph and Twitter Cards
-  title = "Mohamed Shalan's Dev Blog"
+  title = "Shalan's Dev Blog"
 
   # website description for RSS, SEO, Open Graph and Twitter Cards
   description = "Software Engineering insights, tutorials, and technical deep dives"
@@ -98,7 +98,7 @@ theme = "LoveIt"
     # Custom content (HTML format is supported)
     custom = ''
     # whether to show Hugo and theme info
-    hugo = true
+    hugo = false
     # whether to show copyright info
     copyright = true
     # whether to show the author
@@ -131,7 +131,7 @@ theme = "LoveIt"
   # App icon config
   [params.app]
     # optional site title override for the app when added to an iOS home screen or Android launcher
-    title = "Mohamed Shalan's Dev Blog"
+    title = "Shalan's Dev Blog"
     # whether to omit favicon resource links
     noFavicon = false
     # modern SVG favicon to use in place of older style .ico
@@ -175,7 +175,7 @@ theme = "LoveIt"
       # title shown in home page (HTML format is supported)
       title = ""
       # subtitle shown in home page (HTML format is supported)
-      subtitle = "Software Engineer & Tech Enthusiast"
+      subtitle = "Mobile Software Engineer & Tech Enthusiast"
       # whether to use typeit animation for subtitle
       typeit = true
       # whether to show social links
