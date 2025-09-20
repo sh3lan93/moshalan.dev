@@ -102,13 +102,13 @@ theme = "LoveIt"
     # whether to show copyright info
     copyright = true
     # whether to show the author
-    author = true
+    author = false
     # Site creation time
     since = ""
     # ICP info only in China (HTML format is supported)
     icp = ""
     # license info (HTML format is supported)
-    license = '© 2025 Mohamed Shalan. All rights reserved.'
+    license = 'Mohamed Shalan. All rights reserved.'
 
   # Section (all posts) page config
   [params.section]
@@ -307,7 +307,7 @@ theme = "LoveIt"
     enable = true
     [params.analytics.posthog]
       # PostHog Project API Key (loaded from environment variable)
-      apiKey = "{{ getenv "POSTHOG_API_KEY" }}"
+      apiKey = ""
       # PostHog host URL (default is app.posthog.com)
       host = "https://app.posthog.com"
       # Enable autocapture (default: true)
