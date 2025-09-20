@@ -7,8 +7,6 @@ description: "Learn more about Mohamed Shalan and this software engineering blog
 lightgallery: true
 ---
 
-# About Me
-
 👋 Hi, I'm Mohamed Shalan — a senior mobile software engineer with over 9 years of experience specializing in **Android (Kotlin & Java)** and **Flutter**. I build high-performance, scalable mobile apps with clean architecture and a focus on product impact.
 
 I’ve worked across various industries, building apps used by thousands of users daily, and contributing to systems that combine both native and cross-platform technologies.
@@ -40,7 +38,6 @@ I'm actively working toward the **Staff Engineer (IC4)** level. My main areas of
 - Driving architecture across modules and platforms
 - Improving dev experience through better tooling and CI integration
 - Leading cross-cutting performance initiatives
-- Writing RFCs and technical documentation to align engineering efforts
 
 ---
 

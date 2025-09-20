@@ -1,7 +1,7 @@
 baseURL = "https://moshalan.dev"
 languageCode = "en"
 defaultContentLanguage = "en"
-title = "Mohamed Shalan's Dev Blog"
+title = "Shalan's Dev Blog"
 theme = "LoveIt"
 
 # Author config
@@ -84,7 +84,7 @@ theme = "LoveIt"
       # URL of the LOGO
       logo = ""
       # title name
-      name = "Mohamed Shalan's Dev Blog"
+      name = "Shalan's Dev Blog"
       # you can add extra information before the name (HTML format is supported), such as icons
       pre = ""
       # you can add extra information after the name (HTML format is supported), such as icons
@@ -104,11 +104,11 @@ theme = "LoveIt"
     # whether to show the author
     author = true
     # Site creation time
-    since = 2025
+    since = ""
     # ICP info only in China (HTML format is supported)
     icp = ""
     # license info (HTML format is supported)
-    license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+    license = '© 2025 Mohamed Shalan. All rights reserved.'
 
   # Section (all posts) page config
   [params.section]
@@ -136,12 +136,27 @@ theme = "LoveIt"
     noFavicon = false
     # modern SVG favicon to use in place of older style .ico
     svgFavicon = "/app_icon.svg"
+    # 16x16 PNG favicon
+    favicon16 = "/favicon-16x16.png"
+    # 32x32 PNG favicon
+    favicon32 = "/favicon-32x32.png"
+    # Apple touch icons for iOS devices
+    appleTouchIcon = "/apple-touch-icon.png"
+    appleTouchIcon120 = "/apple-touch-icon-120x120.png"
+    appleTouchIcon152 = "/apple-touch-icon-152x152.png"
+    appleTouchIcon167 = "/apple-touch-icon-167x167.png"
+    appleTouchIcon180 = "/apple-touch-icon-180x180.png"
+    # Android Chrome icons
+    androidChrome192 = "/android-chrome-192x192.png"
+    androidChrome512 = "/android-chrome-512x512.png"
     # Android browser theme color
     themeColor = "#ffffff"
     # Safari mask icon color
     iconColor = "#5bbad5"
     # Windows v8-10 tile color
     tileColor = "#da532c"
+    # Web App Manifest for PWA support
+    webAppManifest = "/site.webmanifest"
 
   # Search config
   [params.search]
@@ -173,7 +188,7 @@ theme = "LoveIt"
       # URL of avatar shown in home page
       avatarURL = "/images/avatar.png"
       # title shown in home page (HTML format is supported)
-      title = ""
+      title = "Mohamed Shalan"
       # subtitle shown in home page (HTML format is supported)
       subtitle = "Mobile Software Engineer & Tech Enthusiast"
       # whether to use typeit animation for subtitle
@@ -203,7 +218,7 @@ theme = "LoveIt"
     # whether to enable twemoji
     twemoji = false
     # whether to enable lightgallery
-    lightgallery = false
+    lightgallery = true
     # whether to enable the ruby extended syntax
     ruby = true
     # whether to enable the fraction extended syntax
@@ -286,6 +301,21 @@ theme = "LoveIt"
     # Comment config
     [params.page.comment]
       enable = false
+
+  # Analytics config
+  [params.analytics]
+    enable = true
+    [params.analytics.posthog]
+      # PostHog Project API Key (loaded from environment variable)
+      apiKey = "{{ getenv "POSTHOG_API_KEY" }}"
+      # PostHog host URL (default is app.posthog.com)
+      host = "https://app.posthog.com"
+      # Enable autocapture (default: true)
+      autocapture = true
+      # Capture pageviews (default: true)
+      capturePageview = true
+      # Disable session recording (default: false)
+      disableSessionRecording = false
 
   # TypeIt config
   [params.typeit]

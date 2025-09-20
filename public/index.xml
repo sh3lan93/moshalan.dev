@@ -1,0 +1,9 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Shalan&#39;s Dev Blog</title>
+        <link>http://localhost:1313/</link>
+        <description>Software Engineering insights, tutorials, and technical deep dives</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 05 Jul 2025 15:00:00 &#43;0400</lastBuildDate>
+            <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+        </channel>
+</rss>
