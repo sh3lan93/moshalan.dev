@@ -309,7 +309,7 @@ theme = "LoveIt"
       # PostHog Project API Key (loaded from environment variable)
       apiKey = ""
       # PostHog host URL (default is app.posthog.com)
-      host = "https://app.posthog.com"
+      host = "https://us.i.posthog.com"
       # Enable autocapture (default: true)
       autocapture = true
       # Capture pageviews (default: true)
