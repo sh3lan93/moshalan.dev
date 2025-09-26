@@ -3,6 +3,7 @@ languageCode = "en"
 defaultContentLanguage = "en"
 title = "Shalan's Dev Blog"
 theme = "LoveIt"
+enableRobotsTXT = true
 
 # Author config
 [author]
@@ -256,6 +257,11 @@ theme = "LoveIt"
       copyTex = true
       # KaTeX extension mhchem
       mhchem = true
+    # Mermaid config (Mermaid https://mermaid-js.github.io/mermaid/)
+    [params.page.mermaid]
+      enable = true
+      # available themes: default, forest, dark, neutral, null
+      theme = "default"
     # Mapbox GL JS config (Mapbox GL JS https://docs.mapbox.com/mapbox-gl-js)
     [params.page.mapbox]
       # access token of Mapbox GL JS
@@ -276,12 +282,12 @@ theme = "LoveIt"
     [params.page.share]
       enable = true
       Twitter = true
-      Facebook = true
+      Facebook = false
       Linkedin = true
       Whatsapp = false
       Pinterest = false
       Tumblr = false
-      HackerNews = true
+      HackerNews = false
       Reddit = true
       VK = false
       Buffer = false

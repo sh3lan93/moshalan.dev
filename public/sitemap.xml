@@ -2,7 +2,18 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>http://localhost:1313/tags/analytics/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/categories/android/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/android/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/asm/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/bytecode/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/categories/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/gradle/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/categories/gradle-plugin/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/kotlin/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/posts/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/posts/easy-analytics-annotation/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/tags/</loc><lastmod>2025-09-24T12:00:00&#43;00:00</lastmod></url><url>
             <loc>http://localhost:1313/about/</loc><lastmod>2025-07-05T15:00:00&#43;04:00</lastmod></url><url>
-            <loc>http://localhost:1313/</loc><lastmod>2025-07-05T15:00:00&#43;04:00</lastmod></url><url>
-            <loc>http://localhost:1313/categories/</loc></url><url>
-            <loc>http://localhost:1313/tags/</loc></url></urlset>
+            <loc>http://localhost:1313/posts/mermaid-test/</loc><lastmod>2024-09-24T18:04:50&#43;00:00</lastmod></url></urlset>
