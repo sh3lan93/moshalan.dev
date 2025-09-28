@@ -207,6 +207,7 @@ enableRobotsTXT = true
   # Social config about the author
   [params.social]
     GitHub = "sh3lan93"
+    LinkedIn = "mohamedsh3lan93"
     Email = "mohamed.sh3lan_93@outlook.com"
     RSS = true
 

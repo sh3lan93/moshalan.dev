@@ -16,17 +16,5 @@
             </div><p>We&rsquo;ve all been there. You&rsquo;re deep in the flow, building that perfect user experience, when suddenly you remember: &ldquo;Oh right, I need to track this screen.&rdquo; Then comes the familiar ritual—add the analytics call, remember the lifecycle method, serialize the parameters, and pray you didn&rsquo;t miss any edge cases. Rinse and repeat for every single screen and action in your app.</p>
 <p><strong>What if I told you there was a better way?</strong></p>]]></description>
 </item>
-<item>
-    <title>Mermaid Test</title>
-    <link>http://localhost:1313/posts/mermaid-test/</link>
-    <pubDate>Tue, 24 Sep 2024 18:04:50 &#43;0000</pubDate>
-    <author>xxxx</author>
-    <guid>http://localhost:1313/posts/mermaid-test/</guid>
-    <description><![CDATA[<h1 id="testing-mermaid-diagrams">Testing Mermaid Diagrams</h1>
-<h2 id="using-shortcode-correct-way">Using Shortcode (Correct Way)</h2>
-<div class="mermaid" id="id-1"></div>
-<h2 id="flowchart-example">Flowchart Example</h2>
-<div class="mermaid" id="id-2"></div>]]></description>
-</item>
 </channel>
 </rss>

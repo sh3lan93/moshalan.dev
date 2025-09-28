@@ -62,7 +62,7 @@ I use this blog to share what I learn — from code-level tricks to high-level e
 Let's connect:
 
 - [GitHub](https://github.com/sh3lan93)  
-- [LinkedIn](www.linkedin.com/in/mohamedsh3lan93)  
+- [LinkedIn](http://linkedin.com/in/mohamedsh3lan93)  
 - [Email](mailto:mohamed.sh3lan_93@outlook.com)
 
 Thanks for stopping by!
