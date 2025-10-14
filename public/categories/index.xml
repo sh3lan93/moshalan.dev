@@ -6,13 +6,20 @@
     <description>Recent content in Categories on Shalan&#39;s Dev Blog</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 24 Sep 2025 12:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Oct 2025 23:25:04 +0400</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Android</title>
       <link>http://localhost:1313/categories/android/</link>
-      <pubDate>Wed, 24 Sep 2025 12:00:00 +0000</pubDate>
+      <pubDate>Mon, 13 Oct 2025 23:25:04 +0400</pubDate>
       <guid>http://localhost:1313/categories/android/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Engineering</title>
+      <link>http://localhost:1313/categories/engineering/</link>
+      <pubDate>Mon, 13 Oct 2025 23:25:04 +0400</pubDate>
+      <guid>http://localhost:1313/categories/engineering/</guid>
       <description></description>
     </item>
     <item>

@@ -3,9 +3,21 @@
         <title>Shalan&#39;s Dev Blog</title>
         <link>http://localhost:1313/</link>
         <description>Software Engineering insights, tutorials, and technical deep dives</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 24 Sep 2025 12:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 13 Oct 2025 23:25:04 &#43;0400</lastBuildDate>
             <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>When Your Test Coverage Lies to You: A Bytecode Murder Mystery</title>
+    <link>http://localhost:1313/posts/jacoco-sentry-bytecode-manipulation-problem/</link>
+    <pubDate>Mon, 13 Oct 2025 23:25:04 &#43;0400</pubDate>
+    <author>Mohamed Shalan</author>
+    <guid>http://localhost:1313/posts/jacoco-sentry-bytecode-manipulation-problem/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/bytecode-manipulation.jpg" referrerpolicy="no-referrer">
+            </div><p>The pull request was routine—merging some changes I&rsquo;d already tested thoroughly. Then <a href="https://www.codacy.com/" target="_blank" rel="noopener noreffer "><strong>Codacy&rsquo;s coverage gate</strong></a> blocked me: &ldquo;Insufficient coverage on modified paths.&rdquo;</p>
+<p>I stared at the failure message. Those paths <em>were</em> covered. I&rsquo;d written the tests myself. Watched them pass. Green checkmarks everywhere except this one gate, claiming I&rsquo;d forgotten to test code that I <em>knew</em> I&rsquo;d tested.</p>
+<p>Fine. I&rsquo;ll prove it. I ran the coverage report locally. <code>./gradlew jacocoTestReport</code> and waited for the HTML output, already composing my &ldquo;actually, the CI is wrong&rdquo; Slack message in my head.</p>]]></description>
+</item>
+<item>
     <title>Stop Writing Boilerplate Analytics Code (Your Future Self Will Thank You)</title>
     <link>http://localhost:1313/posts/easy-analytics-annotation/</link>
     <pubDate>Wed, 24 Sep 2025 12:00:00 &#43;0000</pubDate>
