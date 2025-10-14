@@ -313,16 +313,14 @@ enableRobotsTXT = true
   [params.analytics]
     enable = true
     [params.analytics.posthog]
-      # PostHog Project API Key (loaded from environment variable)
+      # PostHog Project API Key (loaded from environment variable POSTHOG_API_KEY)
+      # For Web Analytics, get your key from: https://us.posthog.com/project/settings
       apiKey = ""
-      # PostHog host URL (default is app.posthog.com)
+      # PostHog host URL for US cloud
       host = "https://us.i.posthog.com"
-      # Enable autocapture (default: true)
-      autocapture = true
-      # Capture pageviews (default: true)
-      capturePageview = true
-      # Disable session recording (default: false)
-      disableSessionRecording = false
+      # Enable session recording (optional for Web Analytics)
+      # When enabled, masks all inputs and text for privacy
+      enableSessionRecording = false
 
   # TypeIt config
   [params.typeit]
@@ -334,6 +332,12 @@ enableRobotsTXT = true
     cursorChar = "|"
     # cursor duration after typing finishing (measured in milliseconds, "-1" means unlimited)
     duration = -1
+
+# Security configuration
+[security]
+  [security.funcs]
+    # Allow getenv to access POSTHOG_API_KEY environment variable
+    getenv = ['^HUGO_', '^CI', 'POSTHOG_API_KEY']
 
 # Markup related configuration in Hugo
 [markup]
