@@ -1,0 +1,107 @@
+{{- if and .Site.Params.analytics.enable .Site.Params.analytics.posthog.apiKey -}}
+<!-- PostHog Web Analytics -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    
+    // Initialize PostHog
+    posthog.init('{{ .Site.Params.analytics.posthog.apiKey }}', {
+        api_host: '{{ .Site.Params.analytics.posthog.host | default "https://us.i.posthog.com" }}',
+        ui_host: 'https://us.posthog.com',
+        capture_pageview: false,              // Manual control for blog-specific tracking
+        capture_pageleave: true,              // Track when users leave
+        autocapture: true,                    // Capture button clicks, form submissions
+        capture_performance: true,            // Track page load performance
+        {{- if .Site.Params.analytics.posthog.enableSessionRecording }}
+        session_recording: {
+            maskAllInputs: true,              // Hide form inputs
+            maskTextSelector: '*',            // Mask all text in recordings
+            recordCrossOriginIframes: false   // Don't record external iframes
+        },
+        {{- else }}
+        disable_session_recording: true,
+        {{- end }}
+        
+        // Register super properties for all events
+        loaded: function(posthog) {
+            // Set blog-wide properties
+            posthog.register({
+                blog_name: 'Shalan\'s Dev Blog',
+                site_url: 'https://moshalan.dev',
+                author: 'Mohamed Shalan',
+                environment: '{{ .Site.Params.environment | default "production" }}'
+            });
+        },
+        
+        persistence: 'localStorage+cookie',
+        secure_cookie: true,
+        same_site: 'Lax',
+        debug: false  // Set to true for debugging
+    });
+    
+    // Track blog-specific events when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        var path = window.location.pathname;
+        var title = document.title || 'Unknown Page';
+        
+        // Track page view with metadata
+        if (path.includes('/posts/')) {
+            // This is a blog post
+            var readingTimeEl = document.querySelector('[data-reading-time]');
+            var readingTime = readingTimeEl ? parseInt(readingTimeEl.getAttribute('data-reading-time')) : null;
+            
+            posthog.capture('blog_post_viewed', {
+                page_title: title,
+                page_path: path,
+                reading_time_minutes: readingTime
+            });
+        } else if (path === '/' || path === '') {
+            // Homepage
+            posthog.capture('homepage_visited', {
+                page_title: title
+            });
+        } else if (path.includes('/categories/') || path.includes('/tags/')) {
+            // Archive pages
+            posthog.capture('archive_page_viewed', {
+                page_title: title,
+                page_type: path.includes('/categories/') ? 'category' : 'tag'
+            });
+        } else {
+            // Other pages
+            posthog.capture('page_viewed', {
+                page_title: title,
+                page_path: path
+            });
+        }
+    });
+    
+    // Optional: Track engagement metrics
+    (function() {
+        var scrollDepth = 0;
+        var maxScroll = 0;
+        var scrollTracked = false;
+        
+        window.addEventListener('scroll', function() {
+            if (document.readyState !== 'complete' || !window.posthog) return;
+            
+            var scrollPercentage = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+            
+            if (scrollPercentage > 25 && scrollPercentage <= 50 && scrollPercentage > maxScroll) {
+                maxScroll = scrollPercentage;
+                if (!scrollTracked) {
+                    posthog.capture('article_scroll_25', { scroll_depth: scrollPercentage });
+                }
+            }
+            
+            if (scrollPercentage > 50 && scrollPercentage <= 75 && scrollPercentage > maxScroll) {
+                maxScroll = scrollPercentage;
+                posthog.capture('article_scroll_50', { scroll_depth: scrollPercentage });
+            }
+            
+            if (scrollPercentage > 75 && scrollPercentage > maxScroll) {
+                maxScroll = scrollPercentage;
+                posthog.capture('article_scroll_75', { scroll_depth: scrollPercentage });
+            }
+        });
+    })();
+</script>
+{{- end -}}
