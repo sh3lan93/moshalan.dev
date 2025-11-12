@@ -2,94 +2,94 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Shalan&#39;s Dev Blog</title>
-    <link>http://localhost:50389/tags/</link>
+    <link>https://moshalan.dev/tags/</link>
     <description>Recent content in Tags on Shalan&#39;s Dev Blog</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Tue, 11 Nov 2025 10:00:00 +0400</lastBuildDate>
-    <atom:link href="http://localhost:50389/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://moshalan.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Analytics</title>
+      <link>https://moshalan.dev/tags/analytics/</link>
+      <pubDate>Tue, 11 Nov 2025 10:00:00 +0400</pubDate>
+      <guid>https://moshalan.dev/tags/analytics/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Android</title>
-      <link>http://localhost:50389/tags/android/</link>
+      <link>https://moshalan.dev/tags/android/</link>
       <pubDate>Tue, 11 Nov 2025 10:00:00 +0400</pubDate>
-      <guid>http://localhost:50389/tags/android/</guid>
+      <guid>https://moshalan.dev/tags/android/</guid>
       <description></description>
     </item>
     <item>
       <title>Kotlin</title>
-      <link>http://localhost:50389/tags/kotlin/</link>
+      <link>https://moshalan.dev/tags/kotlin/</link>
       <pubDate>Tue, 11 Nov 2025 10:00:00 +0400</pubDate>
-      <guid>http://localhost:50389/tags/kotlin/</guid>
+      <guid>https://moshalan.dev/tags/kotlin/</guid>
       <description></description>
     </item>
     <item>
       <title>Library Design</title>
-      <link>http://localhost:50389/tags/library-design/</link>
+      <link>https://moshalan.dev/tags/library-design/</link>
       <pubDate>Tue, 11 Nov 2025 10:00:00 +0400</pubDate>
-      <guid>http://localhost:50389/tags/library-design/</guid>
+      <guid>https://moshalan.dev/tags/library-design/</guid>
       <description></description>
     </item>
     <item>
       <title>Refactoring</title>
-      <link>http://localhost:50389/tags/refactoring/</link>
+      <link>https://moshalan.dev/tags/refactoring/</link>
       <pubDate>Tue, 11 Nov 2025 10:00:00 +0400</pubDate>
-      <guid>http://localhost:50389/tags/refactoring/</guid>
+      <guid>https://moshalan.dev/tags/refactoring/</guid>
       <description></description>
     </item>
     <item>
       <title>Debugging</title>
-      <link>http://localhost:50389/tags/debugging/</link>
+      <link>https://moshalan.dev/tags/debugging/</link>
       <pubDate>Mon, 13 Oct 2025 23:25:04 +0400</pubDate>
-      <guid>http://localhost:50389/tags/debugging/</guid>
+      <guid>https://moshalan.dev/tags/debugging/</guid>
       <description></description>
     </item>
     <item>
       <title>JaCoCo</title>
-      <link>http://localhost:50389/tags/jacoco/</link>
+      <link>https://moshalan.dev/tags/jacoco/</link>
       <pubDate>Mon, 13 Oct 2025 23:25:04 +0400</pubDate>
-      <guid>http://localhost:50389/tags/jacoco/</guid>
+      <guid>https://moshalan.dev/tags/jacoco/</guid>
       <description></description>
     </item>
     <item>
       <title>Sentry</title>
-      <link>http://localhost:50389/tags/sentry/</link>
+      <link>https://moshalan.dev/tags/sentry/</link>
       <pubDate>Mon, 13 Oct 2025 23:25:04 +0400</pubDate>
-      <guid>http://localhost:50389/tags/sentry/</guid>
+      <guid>https://moshalan.dev/tags/sentry/</guid>
       <description></description>
     </item>
     <item>
       <title>Testing</title>
-      <link>http://localhost:50389/tags/testing/</link>
+      <link>https://moshalan.dev/tags/testing/</link>
       <pubDate>Mon, 13 Oct 2025 23:25:04 +0400</pubDate>
-      <guid>http://localhost:50389/tags/testing/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Analytics</title>
-      <link>http://localhost:50389/tags/analytics/</link>
-      <pubDate>Wed, 24 Sep 2025 12:00:00 +0000</pubDate>
-      <guid>http://localhost:50389/tags/analytics/</guid>
+      <guid>https://moshalan.dev/tags/testing/</guid>
       <description></description>
     </item>
     <item>
       <title>Asm</title>
-      <link>http://localhost:50389/tags/asm/</link>
+      <link>https://moshalan.dev/tags/asm/</link>
       <pubDate>Wed, 24 Sep 2025 12:00:00 +0000</pubDate>
-      <guid>http://localhost:50389/tags/asm/</guid>
+      <guid>https://moshalan.dev/tags/asm/</guid>
       <description></description>
     </item>
     <item>
       <title>Bytecode</title>
-      <link>http://localhost:50389/tags/bytecode/</link>
+      <link>https://moshalan.dev/tags/bytecode/</link>
       <pubDate>Wed, 24 Sep 2025 12:00:00 +0000</pubDate>
-      <guid>http://localhost:50389/tags/bytecode/</guid>
+      <guid>https://moshalan.dev/tags/bytecode/</guid>
       <description></description>
     </item>
     <item>
       <title>Gradle</title>
-      <link>http://localhost:50389/tags/gradle/</link>
+      <link>https://moshalan.dev/tags/gradle/</link>
       <pubDate>Wed, 24 Sep 2025 12:00:00 +0000</pubDate>
-      <guid>http://localhost:50389/tags/gradle/</guid>
+      <guid>https://moshalan.dev/tags/gradle/</guid>
       <description></description>
     </item>
   </channel>

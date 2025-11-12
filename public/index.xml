@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Shalan&#39;s Dev Blog</title>
-        <link>http://localhost:62144/</link>
+        <link>https://moshalan.dev/</link>
         <description>Software Engineering insights, tutorials, and technical deep dives</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 11 Nov 2025 10:00:00 &#43;0400</lastBuildDate>
-            <atom:link href="http://localhost:62144/index.xml" rel="self" type="application/rss+xml" />
+            <atom:link href="https://moshalan.dev/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>When Less Is More: Rebuilding Easy Analytics v2.0.0</title>
-    <link>http://localhost:62144/posts/when-less-is-more-rebuilding-the-easy-analytics-annotation/</link>
+    <link>https://moshalan.dev/posts/when-less-is-more-rebuilding-the-easy-analytics-annotation/</link>
     <pubDate>Tue, 11 Nov 2025 10:00:00 &#43;0400</pubDate>
     <author>Mohamed Shalan</author>
-    <guid>http://localhost:62144/posts/when-less-is-more-rebuilding-the-easy-analytics-annotation/</guid>
+    <guid>https://moshalan.dev/posts/when-less-is-more-rebuilding-the-easy-analytics-annotation/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/easy-analytics-annotation-v2.0.0.png" referrerpolicy="no-referrer">
             </div><p>I spent three days debugging a bug I found in 20 minutes.</p>
@@ -19,10 +19,10 @@
 </item>
 <item>
     <title>When Your Test Coverage Lies to You: A Bytecode Murder Mystery</title>
-    <link>http://localhost:62144/posts/jacoco-sentry-bytecode-manipulation-problem/</link>
+    <link>https://moshalan.dev/posts/jacoco-sentry-bytecode-manipulation-problem/</link>
     <pubDate>Mon, 13 Oct 2025 23:25:04 &#43;0400</pubDate>
     <author>Mohamed Shalan</author>
-    <guid>http://localhost:62144/posts/jacoco-sentry-bytecode-manipulation-problem/</guid>
+    <guid>https://moshalan.dev/posts/jacoco-sentry-bytecode-manipulation-problem/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/bytecode-manipulation.jpg" referrerpolicy="no-referrer">
             </div><p>The pull request was routine—merging some changes I&rsquo;d already tested thoroughly. Then <a href="https://www.codacy.com/" target="_blank" rel="noopener noreffer "><strong>Codacy&rsquo;s coverage gate</strong></a> blocked me: &ldquo;Insufficient coverage on modified paths.&rdquo;</p>
@@ -31,10 +31,10 @@
 </item>
 <item>
     <title>Stop Writing Boilerplate Analytics Code (Your Future Self Will Thank You)</title>
-    <link>http://localhost:62144/posts/easy-analytics-annotation/</link>
+    <link>https://moshalan.dev/posts/easy-analytics-annotation/</link>
     <pubDate>Wed, 24 Sep 2025 12:00:00 &#43;0000</pubDate>
     <author>Mohamed Shalan</author>
-    <guid>http://localhost:62144/posts/easy-analytics-annotation/</guid>
+    <guid>https://moshalan.dev/posts/easy-analytics-annotation/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/analytics-annotation-library-hero.jpg" referrerpolicy="no-referrer">
             </div><p>We&rsquo;ve all been there. You&rsquo;re deep in the flow, building that perfect user experience, when suddenly you remember: &ldquo;Oh right, I need to track this screen.&rdquo; Then comes the familiar ritual—add the analytics call, remember the lifecycle method, serialize the parameters, and pray you didn&rsquo;t miss any edge cases. Rinse and repeat for every single screen and action in your app.</p>
