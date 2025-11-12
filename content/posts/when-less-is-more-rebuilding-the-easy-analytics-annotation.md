@@ -97,48 +97,7 @@ Same functionality. But when something breaks now, the error message tells you w
 
 Here's what the refactoring looks like visually:
 
-```mermaid
-graph TB
-    subgraph "Before: Monolithic"
-        A[AnalyticsClassVisitorFactory]
-        A --> A1[Annotation Detection]
-        A --> A2[Type Checking]
-        A --> A3[Strategy Selection]
-        A --> A4[Bytecode Injection]
-        A --> A5[Logging]
-        A --> A6[Error Handling]
-        A1 -.->|tangled with| A2
-        A2 -.->|tangled with| A3
-        A3 -.->|tangled with| A4
-    end
-    
-    subgraph "After: Modular"
-        B[AnalyticsClassVisitorFactoryOrchestrator]
-        B --> C1[AnnotationExtractor]
-        B --> C2[ClassTypeDetector]
-        B --> C3[MethodStrategy]
-        B --> C4[LifecycleVisitor]
-        B --> C5[AnalyticsConstants]
-        B --> C6[AnnotationMetadata]
-        B --> C7[TrackingLogger]
-        
-        C1 --> D[Clean separation]
-        C2 --> D
-        C3 --> D
-        C4 --> D
-    end
-    
-    style A fill:#ffcdd2
-    style B fill:#c8e6c9
-    style C1 fill:#e1f5fe
-    style C2 fill:#e1f5fe
-    style C3 fill:#e1f5fe
-    style C4 fill:#e1f5fe
-    style C5 fill:#fff9c4
-    style C6 fill:#fff9c4
-    style C7 fill:#fff9c4
-    style D fill:#c8e6c9
-```
+![Orchestrator](/images/easy-analytics-annotations/before-and-after.png)
 
 Each helper has clear inputs and outputs. When a test fails, you know exactly which component broke. When you need to add a feature, you know which file to modify.
 
@@ -176,29 +135,7 @@ This is technically *less* powerful—you can't have different handlers anymore.
 
 For those curious about the execution flow, here's how the plugin processes a class with `@TrackScreen`:
 
-```mermaid
-sequenceDiagram
-    participant CF as Class File
-    participant ACVF as ClassVisitorFactory
-    participant AE as AnnotationExtractor
-    participant CTD as ClassTypeDetector
-    participant MIS as MethodStrategy
-    participant LIV as LifecycleVisitor
-    participant OUT as Modified Bytecode
-    
-    CF->>ACVF: Process MainActivity.class
-    ACVF->>AE: Check for @TrackScreen
-    AE->>ACVF: Found! screenName="home"
-    ACVF->>CTD: What type is this class?
-    CTD->>ACVF: It's an Activity
-    ACVF->>MIS: Which methods to instrument?
-    MIS->>ACVF: onCreate, onResume
-    ACVF->>LIV: Inject tracking code
-    LIV->>OUT: Modified bytecode ready
-    
-    Note over CF,OUT: Each component does ONE thing
-    Note over CF,OUT: Easy to test, easy to debug
-```
+![Sequence Diagram](/images/easy-analytics-annotations/sequence-daigram.png)
 
 The beauty is in the separation. Each arrow represents a clear responsibility boundary. When something breaks, the sequence diagram tells you exactly where to look.
 
@@ -244,36 +181,7 @@ That's what less gives you: clarity.
 
 ### The Transformation at a Glance
 
-```mermaid
-graph LR
-    subgraph "v1.0: The Problems"
-        A1[Monolithic<br/>860-line file]
-        A2[Compose module<br/>recomposition issues]
-        A3[No tests<br/>fragile changes]
-        A4[Split config<br/>inconsistent errors]
-    end
-    
-    subgraph "v2.0: The Solutions"
-        B1[Modular<br/>7 focused helpers]
-        B2[Manual tracking<br/>developer control]
-        B3[Comprehensive tests<br/>confident changes]
-        B4[Unified config<br/>consistent behavior]
-    end
-    
-    A1 -.->|refactored| B1
-    A2 -.->|removed| B2
-    A3 -.->|added| B3
-    A4 -.->|simplified| B4
-    
-    style A1 fill:#ffcdd2
-    style A2 fill:#ffcdd2
-    style A3 fill:#ffcdd2
-    style A4 fill:#ffcdd2
-    style B1 fill:#c8e6c9
-    style B2 fill:#c8e6c9
-    style B3 fill:#c8e6c9
-    style B4 fill:#c8e6c9
-```
+![v1.0 vs v2.0](/images/easy-analytics-annotations/v1.0-vs-v2.0.png)
 
 ## Your Turn
 
