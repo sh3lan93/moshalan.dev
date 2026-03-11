@@ -32,18 +32,7 @@
         },
         "description": {{ .Site.Params.description | default "Software Engineering Blog" | safeHTML }},
         {{- $image := .Site.Params.seo.image | default .Site.Params.home.profile.avatarURL -}}
-        {{- with dict "Path" $image "Resources" .Resources | partial "function/resource.html" -}}
-            "image": {
-                "@type": "ImageObject",
-                "url": "{{ .Permalink }}",
-                "width": {{ .Width }},
-                "height": {{ .Height }}
-            },
-        {{- else -}}
-            {{- with $image -}}
-                "image": "{{ . | absURL }}",
-            {{- end -}}
-        {{- end -}}
+        "image": "{{ $image | absURL }}",
         "name": {{ .Site.Title | safeHTML }}
     }
     </script>
@@ -63,34 +52,21 @@
         {{- $images := $params.seo.images | default slice -}}
         {{- if not $images -}}
             {{- with .Resources.GetMatch "featured-image-preview" -}}
-                {{- $images = slice "featured-image-preview" -}}
+                {{- $images = slice .RelPermalink -}}
             {{- end -}}
             {{- with .Resources.GetMatch "featured-image" -}}
-                {{- $images = slice "featured-image" -}}
+                {{- $images = $images | default (slice .RelPermalink) -}}
             {{- end -}}
         {{- end -}}
         {{- with .Site.Params.seo.image | default .Site.Params.home.profile.avatarURL -}}
             {{- $images = $images | default (slice .) -}}
         {{- end -}}
-        {{- with $images -}}
-            "image": [
-                {{- range $index, $value := . -}}
-                    {{- if gt $index 0 }},{{ end -}}
-                    {{- with dict "Path" $value "Resources" $.Resources | partial "function/resource.html" -}}
-                        {
-                            "@type": "ImageObject",
-                            "url": "{{ .Permalink }}",
-                            "width": {{ .Width }},
-                            "height": {{ .Height }}
-                        }
-                    {{- else -}}
-                        {{- with $value -}}
-                            "{{ . | absURL }}"
-                        {{- end -}}
-                    {{- end -}}
-                {{- end -}}
-            ],
-        {{- end -}}
+        "image": [
+            {{- range $index, $value := $images -}}
+                {{- if gt $index 0 }},{{ end -}}
+                "{{ $value | absURL }}"
+            {{- end -}}
+        ],
         "genre": "{{ .Type }}",
         {{- with .Params.tags -}}
             "keywords": "{{ delimit . ", " }}",

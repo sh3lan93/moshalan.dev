@@ -60,7 +60,7 @@ enableRobotsTXT = true
   title = "Shalan's Dev Blog"
 
   # website description for RSS, SEO, Open Graph and Twitter Cards
-  description = "Software Engineering insights, tutorials, and technical deep dives"
+  description = "A software engineering blog by Mohamed Shalan featuring deep dives into Android development, Kotlin, mobile architecture, agentic workflows, and automation tools."
 
   # website keywords for SEO
   keywords = ["Software Engineering", "Programming", "Development", "Technology", "Tutorial", "Mobile Software Engineering", "Android Software Egnineering", "Android Development", "Flutter Development", "Mobile CI/CD"]

@@ -3,7 +3,7 @@ title: "About"
 date: 2025-07-05T15:00:00+04:00
 draft: false
 author: "Mohamed Shalan"
-description: "Learn more about Mohamed Shalan and this software engineering blog"
+description: "Discover more about Mohamed Shalan, a mobile engineer sharing technical insights, project retrospectives, and engineering leadership strategies."
 lightgallery: true
 ---
 
