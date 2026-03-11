@@ -5,12 +5,6 @@ title = "Shalan's Dev Blog"
 theme = "LoveIt"
 enableRobotsTXT = true
 
-# Author config
-[author]
-  name = "Mohamed Shalan"
-  email = "mohamed.sh3lan_93@outlook.com"
-  link = "https://github.com/sh3lan93"
-
 # Menu config
 [menu]
   [[menu.main]]
@@ -73,6 +67,12 @@ enableRobotsTXT = true
 
   # website images for Open Graph and Twitter Cards
   images = ["/logo.png"]
+
+  # Author config
+  [params.author]
+    name = "Mohamed Shalan"
+    email = "mohamed.sh3lan_93@outlook.com"
+    link = "https://github.com/sh3lan93"
 
   # Header config
   [params.header]

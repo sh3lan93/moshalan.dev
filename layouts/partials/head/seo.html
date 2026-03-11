@@ -1,0 +1,127 @@
+{{- $params := .Scratch.Get "params" -}}
+
+{{- with .Site.Params.verification.google -}}
+    <meta name="google-site-verification" content="{{ . }}" />
+{{- end -}}
+{{- with .Site.Params.verification.bing -}}
+    <meta name="msvalidate.01" content="{{ . }}" />
+{{- end -}}
+{{- with .Site.Params.verification.yandex -}}
+    <meta name="yandex-verification" content="{{ . }}" />
+{{- end -}}
+{{- with .Site.Params.verification.pinterest -}}
+    <meta name="p:domain_verify" content="{{ . }}" />
+{{- end -}}
+{{- with .Site.Params.verification.baidu -}}
+    <meta name="baidu-site-verification" content="{{ . }}" />
+{{- end -}}
+
+{{- /* Home SEO */ -}}
+{{- if .IsHome -}}
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "url": "{{ .Permalink }}",
+        {{- with .Site.LanguageCode -}}
+            "inLanguage": "{{ . }}",
+        {{- end -}}
+        "author": {
+            "@type": "Person",
+            "name": {{ .Site.Params.author.name | default .Site.Params.Author.name | default "Mohamed Shalan" | safeHTML }}
+        },
+        "description": {{ .Site.Params.description | default "Software Engineering Blog" | safeHTML }},
+        {{- $image := .Site.Params.seo.image | default .Site.Params.home.profile.avatarURL -}}
+        {{- with dict "Path" $image "Resources" .Resources | partial "function/resource.html" -}}
+            "image": {
+                "@type": "ImageObject",
+                "url": "{{ .Permalink }}",
+                "width": {{ .Width }},
+                "height": {{ .Height }}
+            },
+        {{- else -}}
+            {{- with $image -}}
+                "image": "{{ . | absURL }}",
+            {{- end -}}
+        {{- end -}}
+        "name": {{ .Site.Title | safeHTML }}
+    }
+    </script>
+
+{{- /* Page SEO */ -}}
+{{- else if .IsPage -}}
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": {{ .Title | safeHTML }},
+        "inLanguage": "{{ .Site.LanguageCode }}",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "{{ .Permalink }}"
+        },
+        {{- $images := $params.seo.images | default slice -}}
+        {{- if not $images -}}
+            {{- with .Resources.GetMatch "featured-image-preview" -}}
+                {{- $images = slice "featured-image-preview" -}}
+            {{- end -}}
+            {{- with .Resources.GetMatch "featured-image" -}}
+                {{- $images = slice "featured-image" -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with .Site.Params.seo.image | default .Site.Params.home.profile.avatarURL -}}
+            {{- $images = $images | default (slice .) -}}
+        {{- end -}}
+        {{- with $images -}}
+            "image": [
+                {{- range $index, $value := . -}}
+                    {{- if gt $index 0 }},{{ end -}}
+                    {{- with dict "Path" $value "Resources" $.Resources | partial "function/resource.html" -}}
+                        {
+                            "@type": "ImageObject",
+                            "url": "{{ .Permalink }}",
+                            "width": {{ .Width }},
+                            "height": {{ .Height }}
+                        }
+                    {{- else -}}
+                        {{- with $value -}}
+                            "{{ . | absURL }}"
+                        {{- end -}}
+                    {{- end -}}
+                {{- end -}}
+            ],
+        {{- end -}}
+        "genre": "{{ .Type }}",
+        {{- with .Params.tags -}}
+            "keywords": "{{ delimit . ", " }}",
+        {{- end -}}
+        "wordcount": {{ .WordCount }},
+        "url": "{{ .Permalink }}",
+        {{- if not .PublishDate.IsZero -}}
+            "datePublished": {{ .PublishDate.Format "2006-01-02T15:04:05-07:00" | safeHTML }},
+        {{- else if not .Date.IsZero -}}
+            "datePublished": {{ .Date.Format "2006-01-02T15:04:05-07:00" | safeHTML }},
+        {{- end -}}
+        {{- with .Lastmod -}}
+            "dateModified": {{ .Format "2006-01-02T15:04:05-07:00" | safeHTML }},
+        {{- end -}}
+        {{- with .Site.Copyright -}}
+            "license": {{ . | safeHTML }},
+        {{- end -}}
+        {{- $publisherName := .Site.Params.author.name | default .Site.Params.Author.name | default "Mohamed Shalan" -}}
+        "publisher": {
+            "@type": "Organization",
+            "name": {{ $publisherName | safeHTML }},
+            "logo": {
+                "@type": "ImageObject",
+                "url": "{{ .Site.Params.home.profile.avatarURL | absURL }}"
+            }
+        },
+        "author": {
+            "@type": "Person",
+            "name": {{ .Params.author | default .Site.Params.author.name | default .Site.Params.Author.name | default "Mohamed Shalan" | safeHTML }}
+        },
+        "description": {{ .Description | default .Site.Params.description | safeHTML }}
+    }
+    </script>
+{{- end -}}
