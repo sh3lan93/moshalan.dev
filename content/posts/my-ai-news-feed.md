@@ -93,9 +93,7 @@ On 18 GB of unified memory, you can't have two 5–6 GB models loaded simultaneo
 
 **The Fix:** After the Pass 1 scoring loop finishes, send a `POST /api/generate` request with `keep_alive: 0` to force-evict Mistral before loading Llama 3. Two lines of config that prevent hours of debugging mystery slowdowns where everything technically works but takes 10x longer.
 
-<p align="center">
-  <img src="/images/ai-pulse/ai-pulse-models-loading-timeline.webp" alt="Timeline chart showing Mistral 7B being evicted from memory before Llama 3 8B loads during AI Pulse's two-pass scoring pipeline" width="823" height="462" loading="lazy" />
-</p>
+![Timeline chart showing Mistral 7B being evicted from memory before Llama 3 8B loads during AI Pulse's two-pass scoring pipeline](/images/ai-pulse/ai-pulse-models-loading-timeline.webp)
 
 ### Tailwind v4 and better-sqlite3
 
