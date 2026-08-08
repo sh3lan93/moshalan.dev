@@ -2,6 +2,9 @@
 public/
 resources/
 
+# Pre-publication working files (briefs, un-humanized drafts)
+drafts/
+
 # Environment variables
 .env
 
