@@ -5,6 +5,9 @@ resources/
 # Pre-publication working files (briefs, un-humanized drafts)
 drafts/
 
+# Design sources (.pen files); exported images live in assets/images/
+design/
+
 # Environment variables
 .env
 
