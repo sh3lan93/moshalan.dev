@@ -1,50 +1,46 @@
 ---
 title: "About"
-date: 2025-07-05T15:00:00+04:00
+date: 2026-08-28T15:00:00+04:00
 draft: false
 author: "Mohamed Shalan"
-description: "Discover more about Mohamed Shalan, a mobile engineer sharing technical insights, project retrospectives, and engineering leadership strategies."
+description: "Discover more about Mohamed Shalan, a senior mobile engineer working across Android, Flutter, and AI engineering strategy."
 lightgallery: true
 ---
 
-👋 Hi, I'm Mohamed Shalan — a senior mobile software engineer with over 9 years of experience specializing in **Android (Kotlin & Java)** and **Flutter**. I build high-performance, scalable mobile apps with clean architecture and a focus on product impact.
+👋 Hi, I'm Mohamed Shalan — a senior mobile software engineer with 9+ years building and scaling native Android apps in **Kotlin**, plus cross-platform work in **Flutter** and **Kotlin Multiplatform**. Over the past year I've also taken on a second, self-directed track: defining how AI coding agents should operate safely inside large, multi-language codebases.
 
-I’ve worked across various industries, building apps used by thousands of users daily, and contributing to systems that combine both native and cross-platform technologies.
+I've worked across delivery, telecom, and e-commerce, shipping subscription and rewards products used by millions of people daily — and, more recently, writing the audits, RFCs, and governance frameworks that decide how AI agents are allowed to touch production code.
 
 ---
 
 ## 🔧 What I Do
 
-- Architect and develop mobile apps using **modern Android (Jetpack Compose, ViewModel, Flow)** and **Flutter**
-- Create and maintain **multi-module projects** with clean separation of concerns
-- Maintain developer workflows using **Gradle plugins**, **Bitrise**, and **Codemagic**
-- Improve performance and detect UI jank with **custom logcat parsing tools**
+- Architect and build native Android apps with **Jetpack Compose, Coroutines/Flow, and multi-module Gradle architecture**, alongside Flutter and Kotlin Multiplatform for cross-platform delivery
+- Audit codebases for **AI-readiness** — scoring rubrics, test-coverage gaps, and guardrails that decide whether an AI agent can safely work in a given module
+- Design **governance frameworks for AI agent skills** — CI quality gates, versioning, and security review, keeping deterministic checks (which block) separate from model-backed ones (which only advise)
+- Build developer tooling that treats **reproducibility as a first-class requirement** — lockfiles, pinned commits, checksum verification — applied to AI agent skills the way npm applies it to packages
 
 ---
 
 ## 🧠 What I Believe In
 
-- **Simplicity with purpose**: I aim for maintainable solutions that solve real product problems
-- **Platform thinking**: I design reusable components and systems across teams and modules
-- **Metrics-driven**: I rely on performance and usage data to guide improvements
-- **Continuous growth**: I'm always learning and helping others grow — through mentorship, documentation, and collaboration
+- **Determinism vs. AI as a design axis**: the pipelines that must be correct every time stay deterministic; AI is layered on top with explicit guardrails, and it's always clear which is which
+- **Evidence over confidence**: architecture decisions and audit findings should point at line numbers, commit hashes, and dated sources — not vibes
+- **Security-first by default**: if you're the one proposing AI infrastructure, you're also the one responsible for its blast radius
+- **Honest scoping**: a framework that "advises" isn't a guarantee, and I'd rather say that out loud than let a promise outrun what's actually enforced
 
 ---
 
 ## 🎯 Current Focus
 
-I'm actively working toward the **Staff Engineer (IC4)** level. My main areas of focus right now:
-
-- Driving architecture across modules and platforms
-- Improving dev experience through better tooling and CI integration
-- Leading cross-cutting performance initiatives
+Most of my day-to-day is still native Android. Alongside that, I've spent the last several months defining a mobile organization's AI engineering direction — auditing AI-readiness across codebases in multiple languages, designing agent-skill governance that CI can actually enforce, and building the tooling to distribute and version those skills safely.
 
 ---
 
-## 🧪 Side Projects & Experiments
+## 🧪 Projects
 
-- 🛠 Built a **Gradle plugin** that injects analytics tracking using annotations and ASM
-- 🔍 Developed tools to detect **jank frames** from UI test logs
+- 🤖 **[Mobile Automator](https://github.com/sh3lan93/mobile-automator)** (open source, Apache 2.0) — a host-agnostic CLI that lets AI coding agents author and run mobile UI tests over MCP, using portable JSON scenarios matched on visible text and semantic role instead of resource IDs, so the same test runs on both Android and iOS
+- 📰 **AI Pulse** — a fully local AI news aggregation and scoring dashboard (n8n, local LLMs via Ollama, SQLite, Vue 3) with automated workflows and a calibration feedback loop
 
 ---
 
@@ -54,6 +50,7 @@ I use this blog to share what I learn — from code-level tricks to high-level e
 
 - Mobile architecture (Android + Flutter)
 - Developer tooling & automation
+- AI agent engineering, governance, and safety
 - Clean code, testing, and CI/CD
 - Engineering leadership and IC progression
 
