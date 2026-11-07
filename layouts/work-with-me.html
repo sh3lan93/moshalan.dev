@@ -1,0 +1,38 @@
+{{- define "main" }}
+<article class="brand-page">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p class="brand-page__lead">{{ . }}</p>{{ end }}
+  </header>
+
+  <section class="post-content">{{ .Content }}</section>
+
+  <section class="brand-cards" aria-label="Services">
+    {{- range site.Data.services }}
+    <div class="brand-card" data-service="{{ .id }}">
+      <h2 class="brand-card__title">{{ .title }}</h2>
+      <p class="brand-card__body">{{ .summary }}</p>
+      <ul>{{ range .includes }}<li>{{ . }}</li>{{ end }}</ul>
+      <p class="brand-card__meta"><strong>You get:</strong> {{ .outcome }}</p>
+    </div>
+    {{- end }}
+  </section>
+
+  <section class="brand-section brand-proof">
+    <h2 class="brand-section__label">Proof</h2>
+    <ul class="brand-proof__list">
+      {{- range first 1 (where site.RegularPages.ByDate.Reverse "Params.caseStudy" true) }}
+      <li><a data-proof="case-study" href="{{ .RelPermalink }}">Case study: {{ .Title }}</a></li>
+      {{- end }}
+      {{- range site.Data.home.proof }}
+      <li><a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>{{ with .note }} <span class="brand-proof__note">· {{ . }}</span>{{ end }}</li>
+      {{- end }}
+      {{- with site.GetPage "posts/code-review-in-AI-era.md" }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="brand-proof__note">· how I think about review when AI writes the code</span></li>
+      {{- end }}
+    </ul>
+  </section>
+
+  {{- partial "brand/contact.html" . }}
+</article>
+{{- end }}

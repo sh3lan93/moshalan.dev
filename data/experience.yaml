@@ -1,0 +1,21 @@
+# DRAFT: owner fills roles/dates.
+# The timeline section is hidden while `roles` is empty. Add entries like:
+#   - role: "Senior Android Engineer"
+#     company: "Company name"
+#     start: "2022-03"
+#     end: "present"
+#     highlights:
+#       - "Impact bullet with a number if you have one"
+summary: "Senior mobile engineer with 9+ years building and scaling native Android apps in Kotlin, plus cross-platform work in Flutter and Kotlin Multiplatform. I've shipped subscription and rewards products used by millions of people daily across delivery, telecom and e-commerce, and I now also lead how AI coding agents are adopted safely in a mobile organization."
+roles: []
+skills:
+  - "Kotlin"
+  - "Jetpack Compose"
+  - "Coroutines & Flow"
+  - "Multi-module Gradle architecture"
+  - "Kotlin Multiplatform"
+  - "Flutter"
+  - "Mobile CI/CD"
+  - "Testing & code coverage"
+  - "AI-readiness audits"
+  - "AI agent governance"

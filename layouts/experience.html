@@ -1,0 +1,40 @@
+{{- define "main" }}
+{{- $brand := site.Params.brand -}}
+{{- $xp := site.Data.experience -}}
+<article class="brand-page">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    <p class="brand-page__lead">{{ $brand.positioning }}</p>
+  </header>
+
+  <section class="brand-section">
+    <p>{{ $xp.summary }}</p>
+    <div class="brand-btns">
+      {{- partial "brand/button.html" (dict "label" "Download resume (PDF)" "url" $brand.resumePDF "primary" true) }}
+      {{- partial "brand/button.html" (dict "label" "LinkedIn" "url" $brand.linkedin "primary" (not $brand.resumePDF)) }}
+    </div>
+  </section>
+
+  {{- with $xp.roles }}
+  <section class="brand-section brand-timeline">
+    <h2 class="brand-section__label">Experience</h2>
+    <ol class="brand-timeline__list">
+      {{- range . }}
+      <li class="brand-timeline__item">
+        <h3 class="brand-timeline__role">{{ .role }} · {{ .company }}</h3>
+        <p class="brand-timeline__dates">{{ .start }} – {{ .end }}</p>
+        {{- with .highlights }}<ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+
+  {{- with $xp.skills }}
+  <section class="brand-section">
+    <h2 class="brand-section__label">Skills</h2>
+    <ul class="brand-tags">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+  </section>
+  {{- end }}
+</article>
+{{- end }}

@@ -1,0 +1,10 @@
+{{- /* Contact block: email always; Cal.com button only when params.brand.calcomURL is set. */ -}}
+{{- $brand := site.Params.brand -}}
+<section class="brand-section brand-contact">
+  <h2 class="brand-section__label">Get in touch</h2>
+  <p>Email me at <a href="mailto:{{ $brand.email }}">{{ $brand.email }}</a>{{ if $brand.calcomURL }}, or book a short intro call{{ end }}.</p>
+  <div class="brand-btns">
+    {{- partial "brand/button.html" (dict "label" "Book an intro call" "url" $brand.calcomURL "primary" true) }}
+    {{- partial "brand/button.html" (dict "label" "Email me" "url" (printf "mailto:%s" $brand.email) "primary" (not $brand.calcomURL)) }}
+  </div>
+</section>

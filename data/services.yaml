@@ -1,0 +1,19 @@
+# DRAFT: owner review
+# Work with me: the two consulting services. Never name the current employer here.
+- id: audit
+  title: "AI-readiness audit"
+  summary: "Before your team hands work to AI coding agents, find out where that's safe, where it isn't, and what to fix first."
+  includes:
+    - "Module-by-module scoring of your mobile codebases (Android, iOS, KMP, Flutter) against an AI-readiness rubric"
+    - "Test-coverage and architecture gaps that would let an agent ship a regression unnoticed"
+    - "Guardrails that should exist before agents touch production code"
+  outcome: "A written report with findings tied to file paths and commits, and a prioritized fix list your team can start on the next day."
+- id: setup
+  title: "Agent workflow setup"
+  summary: "Get your mobile team working with AI agents inside guardrails that CI actually enforces."
+  includes:
+    - "Agent skills and instructions tailored to your codebase and conventions"
+    - "CI quality gates that keep deterministic checks (which block) separate from model-based ones (which advise)"
+    - "Review rules, versioning and safe distribution of skills across repos"
+    - "Agent-driven mobile UI testing where it fits (built on Mobile Automator)"
+  outcome: "Working agent workflows in your repos, documented so your team owns and evolves them without me."
