@@ -95,6 +95,14 @@ The site uses PostHog for analytics and user behavior tracking:
 - Add your PostHog API key to `params.analytics.posthog.apiKey` in `hugo.toml`
 - Features: autocapture, pageview tracking, and optional session recording
 
+### Local AI Working Files (not in git)
+Design specs, implementation plans, and mockups live in gitignored folders, so they exist only on the owner's machine. Search tools that respect `.gitignore` (ripgrep, Grep/Glob) will skip them, so list and read them directly:
+- `docs/superpowers/specs/`: approved design documents (read before changing site structure or theme)
+- `docs/superpowers/plans/`: implementation plans
+- `.superpowers/brainstorm/`: HTML mockups from brainstorming sessions
+
+Never commit these folders.
+
 ### Development Notes
 - Hugo Extended is required (for SCSS processing)
 - Theme submodule must be initialized: `git submodule update --init --recursive`
