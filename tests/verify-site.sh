@@ -116,7 +116,7 @@ check_posthog() {
   perl -pi -e 's/apiKey = ""/apiKey = "phc_test"/' "$s/hugo.toml"
   grep -q 'apiKey = "phc_test"' "$s/hugo.toml" || { fail posthog "CI key substitution did not match hugo.toml"; return; }
   if ! build "$s" "$o"; then fail posthog "keyed build failed"; return; fi
-  if grep -q "posthog.init('phc_test'" "$o/index.html"; then pass posthog; else fail posthog "posthog.init('phc_test' missing"; fi
+  if grep -qE "posthog\.init\(['\"]phc_test['\"]" "$o/index.html"; then pass posthog; else fail posthog "posthog.init('phc_test' missing"; fi
 }
 
 check_meta() {
