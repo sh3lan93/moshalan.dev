@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+# Builds the site into a temp dir and checks the built output.
+# Usage: tests/verify-site.sh [check ...]   (default: all checks)
+# Never writes to the repo's public/ or resources/ (builds a copy).
+set -uo pipefail
+
+ROOT=$(cd "$(dirname "$0")/.." && pwd)
+TMP=$(mktemp -d)
+trap 'rm -rf "$TMP"' EXIT
+
+BASE_URL="https://moshalan.dev"
+POSITIONING="Senior mobile engineer helping teams adopt AI agents safely."
+DOOR1="Hiring a senior or lead mobile engineer?"
+DOOR2="Bringing AI agents into your mobile team?"
+EMAIL="mohamed.sh3lan.93@gmail.com"
+LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
+NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages"
+
+FAILS=0
+pass() { echo "PASS $1"; }
+fail() { echo "FAIL $1: $2"; FAILS=$((FAILS + 1)); }
+
+copy_site() { # copy_site <dest>
+  mkdir -p "$1"
+  rsync -a --exclude .git --exclude public --exclude resources \
+    --exclude .superpowers --exclude docs "$ROOT/" "$1/"
+}
+
+build() { # build <srcdir> <outdir>
+  (cd "$1" && hugo --gc --minify -e production -d "$2" --cacheDir "$TMP/cache" --logLevel error) >"$TMP/build.log" 2>&1
+}
+
+# Decode the HTML entities Hugo/minify emit for our copy.
+text() { sed -e "s/&#39;/'/g; s/&rsquo;/'/g; s/&#x27;/'/g; s/&amp;/\&/g; s/&#43;/+/g; s/&middot;/·/g" "$1"; }
+
+path_file() { # map a URL path to a file in $2
+  local p=${1#"$BASE_URL"}
+  [[ $p == */ ]] && p="${p}index.html"
+  echo "$2$p"
+}
+
+is_alias() { grep -q 'http-equiv=\(refresh\|"refresh"\)' "$1"; }
+
+og_image() { grep -oE 'property="?og:image"? content="?[^" >]+' "$1" | head -1 | sed -E 's/.*content="?//'; }
+
+img_dims() { # prints "W H"
+  if command -v sips >/dev/null 2>&1; then
+    sips -g pixelWidth -g pixelHeight "$1" 2>/dev/null | awk '/pixelWidth/{w=$2} /pixelHeight/{h=$2} END{print w, h}'
+  else
+    file "$1" | grep -oE '[0-9]+ ?x ?[0-9]+' | head -1 | tr -d ' ' | tr 'x' ' '
+  fi
+}
+
+check_urls() {
+  local missing=() p
+  while IFS= read -r p; do
+    [ -z "$p" ] && continue
+    [ -f "$(path_file "$p" "$OUT")" ] || missing+=("$p")
+  done <"$ROOT/tests/baseline-urls.txt"
+  if [ ${#missing[@]} -eq 0 ]; then pass urls; else fail urls "missing ${missing[*]}"; fi
+}
+
+check_og() {
+  local bad=() f img
+  while IFS= read -r f; do
+    is_alias "$f" && continue
+    img=$(og_image "$f")
+    if [ -z "$img" ]; then bad+=("${f#"$OUT"}(none)"); continue; fi
+    [ -f "$(path_file "$img" "$OUT")" ] || bad+=("${f#"$OUT"}->$img")
+  done < <(find "$OUT" -name index.html)
+  local home
+  home=$(og_image "$OUT/index.html")
+  [ "$home" = "$BASE_URL/images/og-default.png" ] || bad+=("home og:image is '$home'")
+  if [ -f "$OUT/images/og-default.png" ]; then
+    [ "$(img_dims "$OUT/images/og-default.png")" = "1200 630" ] || bad+=("og-default.png not 1200x630")
+  fi
+  if [ ${#bad[@]} -eq 0 ]; then pass og; else fail og "${bad[*]}"; fi
+}
+
+check_home() {
+  local h="$TMP/home.txt" s miss=()
+  text "$OUT/index.html" >"$h"
+  for s in "$POSITIONING" "$DOOR1" "$DOOR2"; do grep -qF "$s" "$h" || miss+=("'$s'"); done
+  if [ ${#miss[@]} -eq 0 ]; then pass home; else fail home "not in raw HTML: ${miss[*]}"; fi
+}
+
+has_case_study() { grep -qE 'data-proof="?case-study' "$1"; }
+
+check_case_study_toggle() {
+  if has_case_study "$OUT/index.html"; then fail case_study_toggle "rendered without any caseStudy post"; return; fi
+  local s="$TMP/site-cs" o="$TMP/out-cs"
+  copy_site "$s"
+  cp "$ROOT/tests/fixtures/case-study.md" "$s/content/posts/fixture-case-study.md"
+  if ! build "$s" "$o"; then fail case_study_toggle "fixture build failed"; return; fi
+  if has_case_study "$o/index.html" && grep -qE 'data-proof="?case-study"?[^>]*href="?[^" >]*/posts/fixture-case-study/|href="?[^" >]*/posts/fixture-case-study/"?[^>]*data-proof="?case-study' "$o/index.html"; then
+    pass case_study_toggle
+  else
+    fail case_study_toggle "fixture caseStudy post not linked with data-proof=case-study"
+  fi
+}
+
+check_mermaid() {
+  local m="$OUT/posts/code-review-in-ai-era/index.html" n="$OUT/posts/my-ai-news-feed/index.html" bad=()
+  grep -qE 'class="?mermaid' "$m" || bad+=("no mermaid block")
+  grep -q 'mermaid.esm.min.mjs' "$m" || bad+=("mermaid script not loaded")
+  grep -q 'mermaid.esm.min.mjs' "$n" && bad+=("mermaid loaded on a post without diagrams")
+  if [ ${#bad[@]} -eq 0 ]; then pass mermaid; else fail mermaid "${bad[*]}"; fi
+}
+
+check_posthog() {
+  if grep -rq 'posthog.init' "$OUT"; then fail posthog "loaded without an API key"; return; fi
+  local s="$TMP/site-ph" o="$TMP/out-ph"
+  copy_site "$s"
+  # same substitution the CI workflow performs
+  perl -pi -e 's/apiKey = ""/apiKey = "phc_test"/' "$s/hugo.toml"
+  grep -q 'apiKey = "phc_test"' "$s/hugo.toml" || { fail posthog "CI key substitution did not match hugo.toml"; return; }
+  if ! build "$s" "$o"; then fail posthog "keyed build failed"; return; fi
+  if grep -q "posthog.init('phc_test'" "$o/index.html"; then pass posthog; else fail posthog "posthog.init('phc_test' missing"; fi
+}
+
+check_meta() {
+  local h="$TMP/meta.txt" bad=() nav
+  text "$OUT/index.html" >"$h"
+  grep -oE '<title>[^<]*' "$h" | grep -q 'Senior mobile engineer' || bad+=("title")
+  grep -oE 'property="?og:description"? content="[^"]*' "$h" | grep -q 'Senior mobile engineer' || bad+=("og:description")
+  nav=$(sed -n 's/.*id="\{0,1\}menu"\{0,1\}>\(.*\)/\1/p' "$h" | sed 's#</ul>.*##' |
+    grep -oE 'href="?[^" >]+' | sed -E 's/href="?//; s#^'"$BASE_URL"'##' | tr '\n' ' ' | sed 's/ $//')
+  [ "$nav" = "$NAV_EXPECTED" ] || bad+=("nav is '$nav'")
+  if [ ${#bad[@]} -eq 0 ]; then pass meta; else fail meta "${bad[*]}"; fi
+}
+
+check_no_old_email() {
+  local hits
+  hits=$(grep -rl 'outlook.com' "$OUT" | sed "s#^$OUT##" | tr '\n' ' ')
+  if [ -z "$hits" ]; then pass no_old_email; else fail no_old_email "found in $hits"; fi
+}
+
+check_no_dead_links() {
+  local f bad=()
+  for f in "$OUT/index.html" "$OUT/work-with-me/index.html" "$OUT/experience/index.html"; do
+    [ -f "$f" ] || continue
+    grep -qE 'href=(""|"#"|#[ >])' "$f" && bad+=("${f#"$OUT"}")
+  done
+  if [ ${#bad[@]} -eq 0 ]; then pass no_dead_links; else fail no_dead_links "empty/# href in ${bad[*]}"; fi
+}
+
+check_pages() {
+  local p bad=()
+  for p in work-with-me experience projects; do [ -f "$OUT/$p/index.html" ] || bad+=("/$p/ missing"); done
+  [ -f "$OUT/work-with-me/index.html" ] && ! grep -q "$EMAIL" "$OUT/work-with-me/index.html" && bad+=("email not on work-with-me")
+  [ -f "$OUT/experience/index.html" ] && ! grep -q "$LINKEDIN" "$OUT/experience/index.html" && bad+=("LinkedIn not on experience")
+  if [ ${#bad[@]} -eq 0 ]; then pass pages; else fail pages "${bad[*]}"; fi
+}
+
+CHECKS=${*:-$ALL_CHECKS}
+SITE="$TMP/site"
+OUT="$TMP/out"
+copy_site "$SITE"
+if ! build "$SITE" "$OUT"; then
+  echo "FAIL build: hugo failed"
+  cat "$TMP/build.log"
+  exit 1
+fi
+for c in $CHECKS; do "check_$c"; done
+echo "---"
+echo "$FAILS check(s) failed"
+[ "$FAILS" -eq 0 ]
