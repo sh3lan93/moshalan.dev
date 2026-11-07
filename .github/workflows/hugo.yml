@@ -49,6 +49,9 @@ jobs:
       - name: Verify site (URLs, share images, homepage, pages)
         run: bash tests/verify-site.sh
 
+      - name: Cut-over gate (owner inputs present, no DRAFT copy)
+        run: bash tests/verify-site.sh cutover
+
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production

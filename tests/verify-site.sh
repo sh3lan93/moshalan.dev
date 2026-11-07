@@ -15,7 +15,7 @@ DOOR2="Bringing AI agents into your mobile team?"
 EMAIL="mohamed.sh3lan.93@gmail.com"
 LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
 NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
-ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes"
 
 FAILS=0
 pass() { echo "PASS $1"; }
@@ -151,6 +151,35 @@ check_pages() {
   [ -f "$OUT/work-with-me/index.html" ] && ! grep -q "$EMAIL" "$OUT/work-with-me/index.html" && bad+=("email not on work-with-me")
   [ -f "$OUT/experience/index.html" ] && ! grep -q "$LINKEDIN" "$OUT/experience/index.html" && bad+=("LinkedIn not on experience")
   if [ ${#bad[@]} -eq 0 ]; then pass pages; else fail pages "${bad[*]}"; fi
+}
+
+check_rss() {
+  local bad=() f link
+  # feed items must be posts only (no About/Experience/Projects/Work with me)
+  while IFS= read -r link; do
+    case "$link" in "$BASE_URL/posts/"*) ;; *) bad+=("feed item $link") ;; esac
+  done < <(sed -n "s#.*<item>.*<link>\([^<]*\)</link>.*#\1#p" <(tr -d "\n" <"$OUT/index.xml" | sed "s#<item>#\n<item>#g"))
+  f=$(grep -rl "0001-01-01\|01 Jan 0001" "$OUT" | sed "s#^$OUT##" | tr "\n" " ")
+  [ -n "$f" ] && bad+=("year-1 dates in $f")
+  if [ ${#bad[@]} -eq 0 ]; then pass rss; else fail rss "${bad[*]}"; fi
+}
+
+check_no_internal_notes() {
+  local f
+  f=$(grep -rlE "DRAFT|data/[a-z]+\.yaml" "$OUT" | sed "s#^$OUT##" | tr "\n" " ")
+  if [ -z "$f" ]; then pass no_internal_notes; else fail no_internal_notes "internal notes published in $f"; fi
+}
+
+# Cut-over gate (spec: one switch-over only after owner inputs). Not in the default set;
+# CI runs it explicitly so main cannot deploy a half-finished site.
+check_cutover() {
+  local bad=()
+  grep -qE "^roles: *\[\]" "$ROOT/data/experience.yaml" && bad+=("experience roles empty")
+  grep -qE "^ *resumePDF = \"\"" "$ROOT/hugo.toml" && bad+=("resumePDF empty")
+  grep -qE "^ *calcomURL = \"\"" "$ROOT/hugo.toml" && bad+=("calcomURL empty")
+  local d; d=$(grep -rl "DRAFT" "$ROOT/content" "$ROOT/data" | sed "s#^$ROOT/##" | tr "\n" " ")
+  [ -n "$d" ] && bad+=("DRAFT markers in $d")
+  if [ ${#bad[@]} -eq 0 ]; then pass cutover; else fail cutover "${bad[*]}"; fi
 }
 
 CHECKS=${*:-$ALL_CHECKS}

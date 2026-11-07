@@ -9,7 +9,7 @@ enableRobotsTXT = true
   pagerSize = 10
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS"]
 
 # Nav order is part of the brand spec: Writing · Projects · Work with me · About
 [menu]

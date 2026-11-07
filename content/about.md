@@ -2,6 +2,7 @@
 title: "About"
 date: 2026-08-28T15:00:00+04:00
 draft: false
+hiddenInRss: true
 author: "Mohamed Shalan"
 description: "Discover more about Mohamed Shalan, a senior mobile engineer working across Android, Flutter, and AI engineering strategy."
 ---

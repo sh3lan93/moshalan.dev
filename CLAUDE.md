@@ -20,6 +20,7 @@ HUGO_ENVIRONMENT=production HUGO_ENV=production hugo --gc --minify --baseURL "ht
 # Run the site verification suite (builds into a temp dir; never touches public/ or resources/)
 bash tests/verify-site.sh            # all checks
 bash tests/verify-site.sh urls og    # specific checks
+bash tests/verify-site.sh cutover   # gate: fails until resume, Cal.com, experience roles are set and no DRAFT copy remains (CI runs it)
 
 # Regenerate the share card after changing the positioning line or avatar
 bash scripts/make-og-card.sh
