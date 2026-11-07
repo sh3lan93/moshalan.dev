@@ -8,7 +8,7 @@
   <section class="post-content">{{ .Content }}</section>
 
   <section class="brand-cards" aria-label="Services">
-    {{- range site.Data.services }}
+    {{- range hugo.Data.services }}
     <div class="brand-card" data-service="{{ .id }}">
       <h2 class="brand-card__title">{{ .title }}</h2>
       <p class="brand-card__body">{{ .summary }}</p>
@@ -24,7 +24,7 @@
       {{- range first 1 (where site.RegularPages.ByDate.Reverse "Params.caseStudy" true) }}
       <li><a data-proof="case-study" href="{{ .RelPermalink }}">Case study: {{ .Title }}</a></li>
       {{- end }}
-      {{- range site.Data.home.proof }}
+      {{- range hugo.Data.home.proof }}
       <li><a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>{{ with .note }} <span class="brand-proof__note">· {{ . }}</span>{{ end }}</li>
       {{- end }}
       {{- with site.GetPage "posts/code-review-in-AI-era.md" }}

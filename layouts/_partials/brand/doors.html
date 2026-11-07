@@ -1,5 +1,5 @@
 <section class="brand-doors" aria-label="How I can help">
-  {{- range site.Data.home.doors }}
+  {{- range hugo.Data.home.doors }}
   <article class="brand-door" data-door="{{ .id }}">
     <h2 class="brand-door__heading">{{ .heading }}</h2>
     <p class="brand-door__body">{{ .body }}</p>

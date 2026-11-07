@@ -5,7 +5,7 @@
     {{- range first 1 (where site.RegularPages.ByDate.Reverse "Params.caseStudy" true) }}
     <li><a data-proof="case-study" href="{{ .RelPermalink }}">Case study: {{ .Title }}</a></li>
     {{- end }}
-    {{- range site.Data.home.proof }}
+    {{- range hugo.Data.home.proof }}
     <li>
       <a href="{{ .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}>{{ .title }}</a>
       {{- with .note }} <span class="brand-proof__note">· {{ . }}</span>{{ end }}

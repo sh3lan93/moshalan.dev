@@ -23,7 +23,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.128.0
+      HUGO_VERSION: 0.169.0
     steps:
       - name: Install Hugo CLI
         run: |
@@ -45,6 +45,9 @@ jobs:
 
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+
+      - name: Verify site (URLs, share images, homepage, pages)
+        run: bash tests/verify-site.sh
 
       - name: Build with Hugo
         env:
