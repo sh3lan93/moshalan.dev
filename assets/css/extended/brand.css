@@ -1,0 +1,143 @@
+/* Brand components on top of PaperMod.
+   PaperMod's own tokens are already a neutral gray scale, so colors come only from
+   its variables (--primary, --secondary, --tertiary, --entry, --border, --theme),
+   which it switches for [data-theme="dark"]. No animations by design. */
+
+.brand-home {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 1.5);
+  padding-top: var(--gap);
+}
+
+/* Hero */
+.brand-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+}
+.brand-hero__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  flex: none;
+  object-fit: cover;
+}
+.brand-hero__name {
+  font-size: 32px;
+  line-height: 1.2;
+  margin: 0 0 6px;
+  color: var(--primary);
+}
+.brand-hero__line {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--secondary);
+  margin: 0 0 10px;
+}
+
+/* Two doors */
+.brand-doors {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+}
+@media (min-width: 720px) {
+  .brand-doors { grid-template-columns: 1fr 1fr; }
+}
+.brand-door {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: var(--gap);
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.brand-door__heading {
+  font-size: 18px;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--primary);
+}
+.brand-door__body {
+  margin: 0;
+  color: var(--secondary);
+  flex-grow: 1;
+}
+
+/* Buttons */
+.brand-btn {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 8px 14px;
+  border: 1px solid var(--tertiary);
+  border-radius: var(--radius);
+  color: var(--primary);
+  font-size: 15px;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s; /* hover color only */
+}
+.brand-btn:hover { background: var(--tertiary); }
+.brand-btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--theme);
+}
+.brand-btn--primary:hover {
+  background: var(--secondary);
+  border-color: var(--secondary);
+}
+.brand-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Sections (proof, latest writing, page sections) */
+.brand-section__label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin: 0 0 10px;
+}
+.brand-proof__list,
+.brand-latest__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.brand-proof__list li,
+.brand-latest__list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.brand-proof__list a,
+.brand-latest__list a {
+  color: var(--primary);
+  font-weight: 500;
+}
+.brand-proof__note,
+.brand-latest__list time {
+  color: var(--secondary);
+  font-size: 14px;
+}
+.brand-latest__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+.brand-latest__list time { flex: none; }
+.brand-more {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--secondary);
+}
+
+@media (max-width: 480px) {
+  .brand-hero { flex-direction: column; align-items: flex-start; }
+  .brand-hero__name { font-size: 26px; }
+  .brand-latest__list li { flex-direction: column; gap: 2px; }
+}

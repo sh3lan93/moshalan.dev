@@ -1,0 +1,12 @@
+<section class="brand-section brand-latest">
+  <h2 class="brand-section__label">Latest writing</h2>
+  <ul class="brand-latest__list">
+    {{- range first 3 (where site.RegularPages.ByDate.Reverse "Section" "posts") }}
+    <li>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+    </li>
+    {{- end }}
+  </ul>
+  <a class="brand-more" href="{{ "posts/" | relURL }}">All writing →</a>
+</section>

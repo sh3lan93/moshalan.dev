@@ -1,0 +1,22 @@
+# Homepage copy ("Two doors"). The positioning line itself lives in hugo.toml (params.brand.positioning).
+# DRAFT: owner review
+doors:
+  - id: hire
+    heading: "Hiring a senior or lead mobile engineer?"
+    body: "9+ years · Android · Kotlin Multiplatform · Flutter · lead-level"
+    button:
+      label: "Experience & resume →"
+      url: "/experience/"
+  - id: consult
+    heading: "Bringing AI agents into your mobile team?"
+    body: "AI-readiness audits and agent workflow setup for mobile teams."
+    button:
+      label: "Work with me →"
+      url: "/work-with-me/"
+
+# Static proof items. The case-study item is added automatically from the newest
+# post with `caseStudy: true` in its front matter.
+proof:
+  - title: "Mobile Automator"
+    url: "https://github.com/sh3lan93/mobile-automator"
+    note: "Open-source CLI that lets AI coding agents write and run mobile UI tests over MCP."

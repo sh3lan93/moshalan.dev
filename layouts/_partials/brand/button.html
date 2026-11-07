@@ -1,0 +1,7 @@
+{{- /* Usage: partial "brand/button.html" (dict "label" "Text" "url" "/path/" "primary" true)
+       Renders nothing when url is empty or "#", so unset owner inputs hide their button. */ -}}
+{{- $url := .url | default "" -}}
+{{- if and $url (ne $url "#") -}}
+<a class="brand-btn{{ if .primary }} brand-btn--primary{{ end }}" href="{{ $url }}"
+  {{- if hasPrefix $url "http" }} target="_blank" rel="noopener"{{ end }}>{{ .label }}</a>
+{{- end -}}

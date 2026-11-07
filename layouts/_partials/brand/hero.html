@@ -1,0 +1,13 @@
+{{- $brand := site.Params.brand -}}
+<section class="brand-hero">
+  {{- with resources.Get "images/avatar.png" }}
+  {{- .Publish }}{{/* keep the original at /images/avatar.png (pre-migration URL) */}}
+  {{- $img := .Resize "240x240 webp" }}
+  <img class="brand-hero__avatar" src="{{ $img.RelPermalink }}" width="120" height="120" alt="{{ site.Params.label.text }}">
+  {{- end }}
+  <div class="brand-hero__text">
+    <h1 class="brand-hero__name">{{ site.Params.label.text }}</h1>
+    <p class="brand-hero__line">{{ $brand.positioning }}</p>
+    {{- partial "social_icons.html" (dict "align" "left") }}
+  </div>
+</section>

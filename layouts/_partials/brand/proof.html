@@ -1,0 +1,15 @@
+{{- /* Proof row: static items from data/home.yaml + the newest post with caseStudy: true (if any). */ -}}
+<section class="brand-section brand-proof">
+  <h2 class="brand-section__label">Proof</h2>
+  <ul class="brand-proof__list">
+    {{- range first 1 (where site.RegularPages.ByDate.Reverse "Params.caseStudy" true) }}
+    <li><a data-proof="case-study" href="{{ .RelPermalink }}">Case study: {{ .Title }}</a></li>
+    {{- end }}
+    {{- range site.Data.home.proof }}
+    <li>
+      <a href="{{ .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}>{{ .title }}</a>
+      {{- with .note }} <span class="brand-proof__note">· {{ . }}</span>{{ end }}
+    </li>
+    {{- end }}
+  </ul>
+</section>
