@@ -124,7 +124,7 @@ check_meta() {
   text "$OUT/index.html" >"$h"
   grep -oE '<title>[^<]*' "$h" | grep -q 'Senior mobile engineer' || bad+=("title")
   grep -oE 'property="?og:description"? content="[^"]*' "$h" | grep -q 'Senior mobile engineer' || bad+=("og:description")
-  nav=$(sed -n 's/.*id="\{0,1\}menu"\{0,1\}>\(.*\)/\1/p' "$h" | sed 's#</ul>.*##' |
+  nav=$(sed -n 's/.*id="\{0,1\}menu"\{0,1\}[^>]*>\(.*\)/\1/p' "$h" | sed 's#</ul>.*##' |
     grep -oE 'href="?[^" >]+' | sed -E 's/href="?//; s#^'"$BASE_URL"'##' | tr '\n' ' ' | sed 's/ $//')
   [ "$nav" = "$NAV_EXPECTED" ] || bad+=("nav is '$nav'")
   if [ ${#bad[@]} -eq 0 ]; then pass meta; else fail meta "${bad[*]}"; fi

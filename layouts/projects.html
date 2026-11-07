@@ -1,0 +1,23 @@
+{{- define "main" }}
+<article class="brand-page">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p class="brand-page__lead">{{ . }}</p>{{ end }}
+  </header>
+  <div class="brand-cards">
+    {{- range site.Data.projects }}
+    <section class="brand-card">
+      <h2 class="brand-card__title">{{ .name }}</h2>
+      <p class="brand-card__body">{{ .description }}</p>
+      {{- with .license }}<p class="brand-card__meta">License: {{ . }}</p>{{ end }}
+      <div class="brand-btns">
+        {{- partial "brand/button.html" (dict "label" "Source →" "url" .url) }}
+        {{- with .post }}{{ with site.GetPage . }}
+        {{- partial "brand/button.html" (dict "label" "Read the write-up →" "url" .RelPermalink) }}
+        {{- end }}{{ end }}
+      </div>
+    </section>
+    {{- end }}
+  </div>
+</article>
+{{- end }}

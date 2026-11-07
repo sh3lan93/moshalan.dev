@@ -141,3 +141,33 @@
   .brand-hero__name { font-size: 26px; }
   .brand-latest__list li { flex-direction: column; gap: 2px; }
 }
+
+/* Content pages (Projects, Work with me, Experience) */
+.brand-page__lead {
+  font-size: 18px;
+  color: var(--secondary);
+  margin-top: 8px;
+}
+.brand-page > section + section { margin-top: calc(var(--gap) * 1.5); }
+.brand-cards {
+  display: grid;
+  gap: var(--gap);
+}
+.brand-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: var(--gap);
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.brand-card__title {
+  font-size: 20px;
+  margin: 0;
+  color: var(--primary);
+}
+.brand-card__body { margin: 0; color: var(--content); line-height: 1.6; }
+.brand-card__meta { margin: 0; color: var(--secondary); font-size: 14px; }
+.brand-card ul { margin: 0; padding-left: 20px; color: var(--content); }
+.brand-card li { margin: 4px 0; }

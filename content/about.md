@@ -12,7 +12,7 @@ I've worked across delivery, telecom, and e-commerce, shipping subscription and 
 
 ---
 
-## 🔧 What I Do
+## What I Do
 
 - Architect and build native Android apps with **Jetpack Compose, Coroutines/Flow, and multi-module Gradle architecture**, alongside Flutter and Kotlin Multiplatform for cross-platform delivery
 - Audit codebases for **AI-readiness** — scoring rubrics, test-coverage gaps, and guardrails that decide whether an AI agent can safely work in a given module
@@ -21,7 +21,7 @@ I've worked across delivery, telecom, and e-commerce, shipping subscription and 
 
 ---
 
-## 🧠 What I Believe In
+## What I Believe In
 
 - **Determinism vs. AI as a design axis**: the pipelines that must be correct every time stay deterministic; AI is layered on top with explicit guardrails, and it's always clear which is which
 - **Evidence over confidence**: architecture decisions and audit findings should point at line numbers, commit hashes, and dated sources — not vibes
@@ -30,20 +30,19 @@ I've worked across delivery, telecom, and e-commerce, shipping subscription and 
 
 ---
 
-## 🎯 Current Focus
+## Current Focus
 
 Most of my day-to-day is still native Android. Alongside that, I've spent the last several months defining a mobile organization's AI engineering direction — auditing AI-readiness across codebases in multiple languages, designing agent-skill governance that CI can actually enforce, and building the tooling to distribute and version those skills safely.
 
 ---
 
-## 🧪 Projects
+## Projects
 
-- 🤖 **[Mobile Automator](https://github.com/sh3lan93/mobile-automator)** (open source, Apache 2.0) — a host-agnostic CLI that lets AI coding agents author and run mobile UI tests over MCP, using portable JSON scenarios matched on visible text and semantic role instead of resource IDs, so the same test runs on both Android and iOS
-- 📰 **AI Pulse** — a fully local AI news aggregation and scoring dashboard (n8n, local LLMs via Ollama, SQLite, Vue 3) with automated workflows and a calibration feedback loop
+Open-source tools and side projects, including **Mobile Automator** (AI agents writing and running mobile UI tests over MCP) and **AI Pulse** (a fully local AI news feed). See them all on the [Projects](/projects/) page.
 
 ---
 
-## 🖋 Why I Blog
+## Why I Blog
 
 I use this blog to share what I learn — from code-level tricks to high-level engineering decisions. Topics I like to write about:
 
@@ -57,8 +56,10 @@ I use this blog to share what I learn — from code-level tricks to high-level e
 
 Let's connect:
 
-- [GitHub](https://github.com/sh3lan93)  
-- [LinkedIn](https://www.linkedin.com/in/mohamedsh3lan93)  
-- [Email](mailto:mohamed.sh3lan_93@outlook.com)
+- [GitHub](https://github.com/sh3lan93)
+- [LinkedIn](https://www.linkedin.com/in/mohamedsh3lan93/)
+- [Email](mailto:mohamed.sh3lan.93@gmail.com)
+
+Hiring for a senior or lead mobile role? See my [experience](/experience/). Bringing AI agents into your mobile team? See how I can [help](/work-with-me/).
 
 Thanks for stopping by!

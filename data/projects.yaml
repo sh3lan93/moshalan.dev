@@ -1,0 +1,13 @@
+# Projects page cards. `post` is a content path (resolved with site.GetPage); `url` is the repo/site.
+# Empty values hide their link.
+- name: "Mobile Automator"
+  description: "A host-agnostic CLI that lets AI coding agents author and run mobile UI tests over MCP. Portable JSON scenarios matched on visible text and semantic role instead of resource IDs, so the same test runs on Android and iOS."
+  url: "https://github.com/sh3lan93/mobile-automator"
+  license: "Apache 2.0"
+- name: "AI Pulse"
+  description: "A fully local AI news aggregation and scoring dashboard: n8n workflows, local LLMs via Ollama, SQLite and Vue 3, with a calibration feedback loop."
+  post: "posts/my-ai-news-feed.md"
+- name: "Easy Analytics"
+  description: "An annotation-driven Android analytics library that removes boilerplate tracking code, rebuilt in v2.0.0 around a much smaller core."
+  url: "https://github.com/sh3lan93/analytics-annotation"
+  post: "posts/when-less-is-more-rebuilding-the-easy-analytics-annotation.md"
