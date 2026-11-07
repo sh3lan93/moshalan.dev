@@ -6,8 +6,9 @@ description: "Eliminate 95% of your analytics tracking code with compile-time by
 categories: ["Android", "Gradle-plugin"]
 tags: ["android", "analytics", "gradle", "kotlin", "bytecode", "asm"]
 author: "Mohamed Shalan"
-featuredImage: "/images/analytics-annotation-library-hero.jpg"
-featuredImagePreview: "/images/analytics-annotation-library-hero.jpg"
+cover:
+  image: "images/analytics-annotation-library-hero.jpg"
+  alt: "Stop Writing Boilerplate Analytics Code (Your Future Self Will Thank You)"
 ---
 
 We've all been there. You're deep in the flow, building that perfect user experience, when suddenly you remember: "Oh right, I need to track this screen." Then comes the familiar ritual—add the analytics call, remember the lifecycle method, serialize the parameters, and pray you didn't miss any edge cases. Rinse and repeat for every single screen and action in your app.

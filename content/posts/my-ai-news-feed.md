@@ -5,8 +5,9 @@ draft: false
 description: "A fully local AI dashboard built with n8n, Ollama, and SQLite — the honest story of building it, debugging it, and what I learned about information overload."
 tags: [AI, LLM, Ollama, n8n, Productivity, Side Project]
 categories: [Engineering]
-featuredImage: "/images/ai-pulse.webp"
-featuredImagePreview: "/images/ai-pulse.webp"
+cover:
+  image: "images/ai-pulse.webp"
+  alt: "I Built My Own AI News Feed Because I Kept Missing What Mattered"
 ---
 
 I spent an hour every morning trying to keep up with AI tooling — and I was still behind.

@@ -4,7 +4,6 @@ date: 2026-08-28T15:00:00+04:00
 draft: false
 author: "Mohamed Shalan"
 description: "Discover more about Mohamed Shalan, a senior mobile engineer working across Android, Flutter, and AI engineering strategy."
-lightgallery: true
 ---
 
 👋 Hi, I'm Mohamed Shalan — a senior mobile software engineer with 9+ years building and scaling native Android apps in **Kotlin**, plus cross-platform work in **Flutter** and **Kotlin Multiplatform**. Over the past year I've also taken on a second, self-directed track: defining how AI coding agents should operate safely inside large, multi-language codebases.

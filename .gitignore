@@ -25,3 +25,4 @@ Thumbs.db
 # AI agent working files (superpowers specs, plans, mockups): local only, never committed
 .superpowers/
 docs/superpowers/
+resources/_gen/

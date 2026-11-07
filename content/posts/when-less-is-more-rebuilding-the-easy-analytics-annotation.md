@@ -6,8 +6,9 @@ author: "Mohamed Shalan"
 description: "How removing features and refactoring a tangled codebase taught me what focused really means"
 tags: ["Android", "Kotlin", "Library Design", "Refactoring", "Analytics"]
 categories: ["Engineering"]
-featuredImage: "/images/easy-analytics-annotation-v2.0.0.png"
-featuredImagePreview: "/images/easy-analytics-annotation-v2.0.0.png"
+cover:
+  image: "images/easy-analytics-annotation-v2.0.0.png"
+  alt: "When Less Is More: Rebuilding Easy Analytics v2.0.0"
 ---
 
 I spent three days debugging a bug I found in 20 minutes.

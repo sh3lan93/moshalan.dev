@@ -5,8 +5,9 @@ title: 'When Your Test Coverage Lies to You: A Bytecode Murder Mystery'
 tags: ["android", "testing", "JaCoCo", "Sentry", "debugging"]
 categories: ["Engineering", "Android"]
 author: "Mohamed Shalan"
-featuredImage: "/images/bytecode-manipulation.jpg"
-featuredImagePreview: "/images/bytecode-manipulation.jpg"
+cover:
+  image: "images/bytecode-manipulation.jpg"
+  alt: 'When Your Test Coverage Lies to You: A Bytecode Murder Mystery'
 description: "Your test coverage is showing 0% despite passing tests. Here's how JaCoCo and Sentry's bytecode instrumentation conflict—and the simple fix."
 ---
 

@@ -6,8 +6,9 @@ author: "Mohamed Shalan"
 description: "Three review bots and two humans approved a pull request that broke a major flow. None of them were wrong, and that is exactly the problem."
 tags: [Code Review, AI, Engineering Culture, Kotlin]
 categories: [Engineering]
-featuredImage: "/images/code-review-in-ai-era.webp"
-featuredImagePreview: "/images/code-review-in-ai-era.webp"
+cover:
+  image: "images/code-review-in-ai-era.webp"
+  alt: "Five Reviewers Approved It. None of Them Were Wrong."
 images: ["/images/code-review-in-ai-era.webp"]
 ---
 
