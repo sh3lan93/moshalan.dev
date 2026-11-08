@@ -8,4 +8,4 @@ ShowToc: false
 ShowShareButtons: false
 ---
 
-I help engineering managers whose mobile teams are starting to use AI coding agents, and want that to make the team faster without making production less safe. I've done this inside a large mobile organization, across codebases in several languages; here's how I can do it with yours.
+I've done it inside a large delivery platform, across 4 codebases in 4 languages.

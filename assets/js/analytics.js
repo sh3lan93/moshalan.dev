@@ -53,6 +53,7 @@
     var rules = [
       ["[data-door]", "home_doors"], [".brand-hero", "hero"], ["#menu", "nav"],
       [".social-icons", "social_icons"], [".brand-contact", "contact"], [".brand-proof", "proof"],
+      [".brand-sticky", "sticky_bar"], [".brand-wwm__cta", "header"], [".brand-services", "services"],
       [".brand-cards", "services"], [".brand-timeline", "experience"], [".post-content", "article_body"],
       [".footer", "footer"]
     ];
@@ -61,6 +62,12 @@
   }
 
   document.addEventListener("click", function (ev) {
+    // Work with me: a service row tapped open (closing it, or desktop's pre-opened rows, don't count)
+    var sum = ev.target.closest && ev.target.closest("details[data-service] > summary");
+    if (sum && ph() && !sum.parentNode.open) {
+      ph().capture("service_expanded", { service: sum.parentNode.getAttribute("data-service"), intent: "consulting", location: "services" });
+      return;
+    }
     var a = ev.target.closest && ev.target.closest("a[href]");
     if (!a || !ph()) return;
     var hit = classify(a.getAttribute("href"), location.pathname, location.origin);

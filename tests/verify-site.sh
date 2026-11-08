@@ -15,7 +15,7 @@ DOOR2="Bringing AI agents into your mobile team?"
 EMAIL="mohamed.sh3lan.93@gmail.com"
 LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
 NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
-ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me"
 
 FAILS=0
 pass() { echo "PASS $1"; }
@@ -207,6 +207,23 @@ check_resume() {
   # headline is mobile, not Android-only (an older role may still be titled Android)
   [ -f "$src" ] && ! grep -q 'class="headline">Senior Mobile Software Engineer<' "$src" && bad+=("headline is not Senior Mobile Software Engineer")
   if [ ${#bad[@]} -eq 0 ]; then pass resume; else fail resume "${bad[*]}"; fi
+}
+
+check_work_with_me() {
+  # Layout "C with A's headline": tap-to-open services, numbers, 3 steps (audit optional), phone booking bar.
+  local h="$TMP/wwm.txt" bad=() n bar
+  text "$OUT/work-with-me/index.html" >"$h"
+  grep -q "Let's make that safe." "$h" || bad+=("headline missing")
+  n=$(grep -oE '<details[^>]*data-service=' "$h" | wc -l | tr -d ' ')
+  [ "$n" = 2 ] || bad+=("expected 2 tap-to-open services, found $n")
+  [ "$(grep -oE '<summary' "$h" | wc -l | tr -d ' ')" -ge 2 ] || bad+=("service summaries missing")
+  for v in "10M+" "20+"; do grep -q "class=\"\{0,1\}brand-stat__value\"\{0,1\}>$v<" "$h" || bad+=("stat $v missing"); done
+  [ "$(grep -oE 'class="?brand-step[ ">]' "$h" | wc -l | tr -d ' ')" = 3 ] || bad+=("expected 3 steps")
+  grep -qE 'data-optional' "$h" || bad+=("no step marked optional")
+  bar=$(grep -oE '<div class="?brand-sticky.*' "$h" | sed 's#</div>.*##')
+  echo "$bar" | grep -q 'cal.com' || bad+=("booking bar has no Cal.com link")
+  echo "$bar" | grep -q "mailto:$EMAIL" || bad+=("booking bar has no email link")
+  if [ ${#bad[@]} -eq 0 ]; then pass work_with_me; else fail work_with_me "${bad[*]}"; fi
 }
 
 check_cutover() {

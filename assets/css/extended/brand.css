@@ -189,3 +189,80 @@
 }
 .brand-contact p { margin: 0 0 12px; }
 .brand-section > p + .brand-btns { margin-top: 16px; }
+
+/* Work with me ("C with A's headline") */
+.brand-wwm .page-header h1 { font-size: 34px; line-height: 1.2; margin: 0; }
+.brand-wwm .brand-page__lead p { margin: 0; }
+.brand-wwm__cta { margin-top: 18px; }
+.brand-services { display: grid; gap: 10px; }
+.brand-service {
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.brand-service summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+}
+.brand-service summary::-webkit-details-marker { display: none; }
+.brand-service summary::after { /* plus / minus, drawn with text so it follows the theme color */
+  content: "+";
+  grid-column: 2; grid-row: 1;
+  font-size: 22px; line-height: 1; color: var(--secondary);
+}
+.brand-service[open] summary::after { content: "\2212"; }
+.brand-service__title { grid-column: 1; font-size: 18px; font-weight: 600; color: var(--primary); }
+.brand-service__summary { grid-column: 1 / -1; color: var(--secondary); line-height: 1.5; }
+.brand-service ul { margin: 12px 0 0; padding-left: 20px; color: var(--content); }
+.brand-service li { margin: 4px 0; }
+.brand-service__outcome { margin: 10px 0 0; font-size: 15px; color: var(--content); }
+
+.brand-stats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.brand-stat {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 8px; text-align: center; display: flex; flex-direction: column; gap: 2px;
+}
+.brand-stat__value { font-size: 26px; font-weight: 700; color: var(--primary); line-height: 1.1; }
+.brand-stat__label { font-size: 13px; color: var(--secondary); line-height: 1.35; }
+
+.brand-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; counter-reset: none; }
+.brand-step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; position: relative; }
+.brand-step + .brand-step::before { /* connector line between step circles */
+  content: ""; position: absolute; top: 17px; right: calc(50% + 22px); width: calc(100% - 34px);
+  border-top: 1px solid var(--border);
+}
+.brand-step__num {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--primary); color: var(--primary);
+  display: flex; align-items: center; justify-content: center; font-weight: 700;
+  background: var(--theme);
+}
+.brand-step[data-optional] .brand-step__num { border-style: dashed; border-color: var(--secondary); color: var(--secondary); }
+.brand-step__title { font-weight: 600; color: var(--primary); font-size: 15px; }
+.brand-step__title em { font-weight: 400; font-style: normal; color: var(--secondary); font-size: 13px; }
+.brand-step__note { font-size: 13px; color: var(--secondary); line-height: 1.35; }
+
+/* Phone booking bar */
+.brand-sticky { display: none; }
+@media (max-width: 719px) {
+  .brand-wwm .page-header h1 { font-size: 26px; }
+  .brand-wwm__cta { display: none; } /* the sticky bar replaces the header buttons */
+  .brand-sticky {
+    display: flex; gap: 10px;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: var(--theme); border-top: 1px solid var(--border);
+  }
+  .brand-sticky .brand-btn { flex: 1; text-align: center; align-self: auto; }
+  body:has(.brand-sticky) { padding-bottom: 64px; }       /* keep the footer clear of the bar */
+  body:has(.brand-sticky) .top-link { bottom: 76px; }      /* lift PaperMod's back-to-top button */
+}
+@media (min-width: 720px) {
+  .brand-services { grid-template-columns: 1fr 1fr; align-items: stretch; }
+  .brand-service summary { cursor: default; pointer-events: none; } /* both stay open on desktop */
+  .brand-service summary::after, .brand-service[open] summary::after { content: none; }
+}

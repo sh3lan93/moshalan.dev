@@ -1,21 +1,51 @@
 {{- define "main" }}
-<article class="brand-page">
+{{- $brand := site.Params.brand -}}
+{{- $d := hugo.Data.services -}}
+<article class="brand-page brand-wwm">
   <header class="page-header">
-    <h1>{{ .Title }}</h1>
-    {{- with .Description }}<p class="brand-page__lead">{{ . }}</p>{{ end }}
+    <p class="brand-section__label">{{ .Title }}</p>
+    <h1>{{ $d.headline }}</h1>
+    <div class="brand-page__lead">{{ .Content }}</div>
+    <div class="brand-btns brand-wwm__cta">
+      {{- partial "brand/button.html" (dict "label" "Book a 15-min call" "url" $brand.calcomURL "primary" true) }}
+      {{- partial "brand/button.html" (dict "label" "Email me" "url" (printf "mailto:%s" $brand.email) "primary" (not $brand.calcomURL)) }}
+    </div>
   </header>
 
-  <section class="post-content">{{ .Content }}</section>
-
-  <section class="brand-cards" aria-label="Services">
-    {{- range hugo.Data.services }}
-    <div class="brand-card" data-service="{{ .id }}">
-      <h2 class="brand-card__title">{{ .title }}</h2>
-      <p class="brand-card__body">{{ .summary }}</p>
+  {{- /* Phones: tap-to-open rows. Desktop (720px+): opened side by side by the script below. */}}
+  <section class="brand-services" aria-label="Services">
+    {{- range $d.services }}
+    <details class="brand-service" data-service="{{ .id }}">
+      <summary>
+        <span class="brand-service__title">{{ .title }}</span>
+        <span class="brand-service__summary">{{ .summary }}</span>
+      </summary>
       <ul>{{ range .includes }}<li>{{ . }}</li>{{ end }}</ul>
-      <p class="brand-card__meta"><strong>You get:</strong> {{ .outcome }}</p>
-    </div>
+      <p class="brand-service__outcome"><strong>You get:</strong> {{ .outcome }}</p>
+    </details>
     {{- end }}
+  </section>
+
+  <section class="brand-section">
+    <h2 class="brand-section__label">Why me</h2>
+    <ul class="brand-stats">
+      {{- range $d.stats }}
+      <li class="brand-stat"><span class="brand-stat__value">{{ .value }}</span><span class="brand-stat__label">{{ .label }}</span></li>
+      {{- end }}
+    </ul>
+  </section>
+
+  <section class="brand-section">
+    <h2 class="brand-section__label">How it works</h2>
+    <ol class="brand-steps">
+      {{- range $i, $s := $d.steps }}
+      <li class="brand-step"{{ if $s.optional }} data-optional{{ end }}>
+        <span class="brand-step__num" aria-hidden="true">{{ add $i 1 }}</span>
+        <span class="brand-step__title">{{ $s.title }}{{ if $s.optional }} <em>(optional)</em>{{ end }}</span>
+        <span class="brand-step__note">{{ $s.note }}</span>
+      </li>
+      {{- end }}
+    </ol>
   </section>
 
   <section class="brand-section brand-proof">
@@ -34,5 +64,17 @@
   </section>
 
   {{- partial "brand/contact.html" . }}
+
+  {{- /* Phones only (hidden at 720px+ by CSS): booking stays one tap away while scrolling. */}}
+  <div class="brand-sticky">
+    {{- partial "brand/button.html" (dict "label" "Book a call" "url" $brand.calcomURL "primary" true) }}
+    {{- partial "brand/button.html" (dict "label" "Email" "url" (printf "mailto:%s" $brand.email) "primary" (not $brand.calcomURL)) }}
+  </div>
 </article>
+<script>
+  // Desktop has room for both services, so show them fully open.
+  if (window.matchMedia("(min-width: 720px)").matches) {
+    document.querySelectorAll(".brand-service").forEach(function (d) { d.open = true; });
+  }
+</script>
 {{- end }}

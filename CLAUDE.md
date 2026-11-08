@@ -45,7 +45,7 @@ hugo new posts/my-new-post.md
 |---|---|
 | Positioning line, email, LinkedIn, GitHub, Cal.com URL, resume PDF path | `hugo.toml` → `[params.brand]` |
 | Homepage door copy + static proof items | `data/home.yaml` |
-| Work with me services | `data/services.yaml` |
+| Work with me headline, services, "Why me" numbers, "How it works" steps | `data/services.yaml` (sublead is the body of `content/work-with-me.md`) |
 | Experience summary, roles timeline, skills | `data/experience.yaml` |
 | Projects page cards | `data/projects.yaml` |
 | Homepage layout | `layouts/home.html` + `layouts/_partials/brand/*.html` |
@@ -58,6 +58,7 @@ hugo new posts/my-new-post.md
 Templates read data with `hugo.Data` (not the deprecated `site.Data`).
 
 ### Behaviors to keep
+- **Work with me layout:** services are `<details>` rows (tap-to-open on phones; opened side by side at 720px+ by an inline script); a fixed booking bar (`.brand-sticky`) shows below 720px and lifts PaperMod's back-to-top button. The `work_with_me` check guards this.
 - **Optional values hide their element.** `calcomURL` and `resumePDF` empty → their buttons don't render. Use `partial "brand/button.html" (dict "label" ... "url" ... "primary" bool)`, which renders nothing for an empty or `#` URL.
 - **Case study:** the newest post with front matter `caseStudy: true` automatically appears in the homepage and Work with me proof rows. The case study never names the current employer (it's described, e.g. "a large delivery platform"). The Experience page names employers normally.
 - **Cover images:** `cover.image: "images/<file>"` with **no leading slash**. Images live in `assets/images/`; a leading slash makes PaperMod skip publishing the image, so the cover and `og:image` 404.
@@ -77,6 +78,7 @@ PostHog config lives in `hugo.toml` under `[params.analytics.posthog]`. The snip
 
 Custom events come from `assets/js/analytics.js` (loaded only when the API key is set; unit tests in `tests/analytics.test.mjs`, run by `node --test tests/` and by the `analytics` verify check):
 - `cta_clicked` {cta, intent, location, link_url, link_text}. Links are classified by **where they point**, not by tags, so nav, theme social icons and links inside posts are covered: `/resume.pdf`, `/experience/`, LinkedIn `/in/` → `hiring`; `/work-with-me/`, cal.com, email on Work with me → `consulting`; GitHub, `/projects/`, other email → `other`. LinkedIn *share* links are ignored. `location` comes from the nearest known container (`home_doors`, `hero`, `nav`, `contact`, `proof`, `article_body`, ...).
+- `service_expanded` {service, intent: consulting, location}: a Work with me service row tapped open on a phone (closing, and desktop's pre-opened rows, don't count).
 - `article_progress` {article_path, title, reading_time_min, percent: 25|50|75|100, seconds} on posts.
 - `article_read` {..., seconds}: reached the end of the post AND visible time >= 40% of Hugo's reading time.
 - Post pages carry `<script id="article-meta">` JSON (path, title, readingTime) from `extend_head.html`.
