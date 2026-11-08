@@ -15,7 +15,7 @@ DOOR2="Bringing AI agents into your mobile team?"
 EMAIL="mohamed.sh3lan.93@gmail.com"
 LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
 NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
-ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume"
 
 FAILS=0
 pass() { echo "PASS $1"; }
@@ -174,6 +174,22 @@ check_no_internal_notes() {
 
 # Cut-over gate (spec: one switch-over only after owner inputs). Not in the default set;
 # CI runs it explicitly so main cannot deploy a half-finished site.
+check_resume() {
+  # Public resume: must exist, be published, and carry only public data.
+  local src="$ROOT/assets/resume/resume.html" pdf="$ROOT/static/resume.pdf" bad=() t
+  [ -f "$src" ] || bad+=("assets/resume/resume.html missing")
+  [ -f "$pdf" ] || bad+=("static/resume.pdf missing")
+  [ -f "$OUT/resume.pdf" ] || bad+=("/resume.pdf not published")
+  t="$TMP/resume.txt"; : >"$t"
+  [ -f "$src" ] && sed 's/<[^>]*>//g' "$src" >>"$t"
+  if [ -f "$pdf" ] && command -v pdftotext >/dev/null; then pdftotext "$pdf" - >>"$t"; fi
+  grep -qiE '\+971|outlook\.com|nationality|visa status|plaintext' "$t" && bad+=("private text: $(grep -oiE '\+971|outlook\.com|nationality|visa status|plaintext' "$t" | sort -u | tr '\n' ',')")
+  [ -s "$t" ] && ! grep -q "$EMAIL" "$t" && bad+=("public email missing")
+  # headline is mobile, not Android-only (an older role may still be titled Android)
+  [ -f "$src" ] && ! grep -q 'class="headline">Senior Mobile Software Engineer<' "$src" && bad+=("headline is not Senior Mobile Software Engineer")
+  if [ ${#bad[@]} -eq 0 ]; then pass resume; else fail resume "${bad[*]}"; fi
+}
+
 check_cutover() {
   local bad=()
   grep -qE "^roles: *\[\]" "$ROOT/data/experience.yaml" && bad+=("experience roles empty")

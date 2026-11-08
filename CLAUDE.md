@@ -20,10 +20,13 @@ HUGO_ENVIRONMENT=production HUGO_ENV=production hugo --gc --minify --baseURL "ht
 # Run the site verification suite (builds into a temp dir; never touches public/ or resources/)
 bash tests/verify-site.sh            # all checks
 bash tests/verify-site.sh urls og    # specific checks
-bash tests/verify-site.sh cutover   # gate: fails until resume, Cal.com, experience roles are set and no DRAFT copy remains (CI runs it)
+bash tests/verify-site.sh cutover   # gate: fails if resume, Cal.com or experience roles are unset or DRAFT copy remains (CI runs it)
 
 # Regenerate the share card after changing the positioning line or avatar
 bash scripts/make-og-card.sh
+
+# Regenerate the public resume PDF after editing assets/resume/resume.html
+bash scripts/make-resume.sh && bash tests/verify-site.sh resume
 
 # New post
 hugo new posts/my-new-post.md
@@ -49,6 +52,7 @@ hugo new posts/my-new-post.md
 | Brand CSS (neutral, uses PaperMod color variables) | `assets/css/extended/brand.css` |
 | PostHog, Mermaid loader, PWA links | `layouts/_partials/extend_head.html` |
 | Share card source / output | `assets/og/card.html` → `static/images/og-default.png` |
+| Public resume source / output | `assets/resume/resume.html` → `static/resume.pdf` (public data only: no phone, nationality, visa, or employer security findings; the `resume` check enforces it) |
 
 Templates read data with `hugo.Data` (not the deprecated `site.Data`).
 

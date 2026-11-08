@@ -1,0 +1,156 @@
+<!doctype html>
+<!-- Public web edition of the resume. Rendered to static/resume.pdf by scripts/make-resume.sh.
+     Public data only: the `resume` check in tests/verify-site.sh lists what must stay out. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mohamed Shalan · Senior Mobile Software Engineer</title>
+<style>
+  @page { size: A4; margin: 11mm 13mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 9pt/1.34 -apple-system, "Helvetica Neue", Arial, sans-serif; color: #1f1f1f; }
+  h1 { font-size: 20pt; margin: 0; letter-spacing: -0.2px; }
+  .headline { font-size: 11.5pt; color: #555; margin: 2px 0 6px; }
+  .contact { margin: 0; color: #333; }
+  .contact a { color: #1f1f1f; text-decoration: none; }
+  h2 { font-size: 9.6pt; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 1px solid #999;
+       padding-bottom: 2px; margin: 9px 0 4px; }
+  h3 { font-size: 9.6pt; margin: 6px 0 0; }
+  h3 span { font-weight: normal; }
+  h4 { font-size: 9.6pt; margin: 5px 0 1px; color: #444; }
+  .meta { font-style: italic; color: #555; margin: 0 0 2px; }
+  p { margin: 0 0 4px; }
+  ul { margin: 2px 0 0; padding-left: 15px; }
+  li { margin: 0 0 1px; }
+  .skills p { margin: 0 0 2px; }
+  li { break-inside: avoid; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Mohamed Shalan</h1>
+  <p class="headline">Senior Mobile Software Engineer</p>
+  <p class="contact">Dubai, United Arab Emirates ·
+    <a href="mailto:mohamed.sh3lan.93@gmail.com">mohamed.sh3lan.93@gmail.com</a> ·
+    <a href="https://www.linkedin.com/in/mohamedsh3lan93/">linkedin.com/in/mohamedsh3lan93</a> ·
+    <a href="https://github.com/sh3lan93">github.com/sh3lan93</a> ·
+    <a href="https://moshalan.dev/">moshalan.dev</a></p>
+</header>
+
+<section>
+  <h2>Professional Summary</h2>
+  <p>Senior mobile engineer with 9+ years building and scaling native Android applications in Kotlin, plus
+  cross-platform delivery with Flutter and Kotlin Multiplatform. At HungerStation (Delivery Hero), delivered the
+  HungerStation subscription (HPlus) service, scaling to 10M+ subscribers and 100M+ orders. Over the past year has also
+  defined the mobile organisation’s AI engineering direction: auditing AI-readiness across four codebases in four languages,
+  architecting agent-skill governance, and designing Figma-to-code design system automation, authoring 20+ RFCs and
+  ADRs reviewed by AI Enablement, InfoSec, and Engineering Leadership.</p>
+</section>
+
+<section class="skills">
+  <h2>Skills</h2>
+  <p><b>Languages:</b> Kotlin, Java, Dart, TypeScript, SQL</p>
+  <p><b>Android:</b> Jetpack Compose, Android SDK, Coroutines, Flow, Jetpack (ViewModel, Navigation, Room, WorkManager), Material Design, Android TV</p>
+  <p><b>Cross-Platform:</b> Kotlin Multiplatform (KMP), Flutter, Bloc</p>
+  <p><b>Architecture:</b> MVVM, MVI, MVP, Clean Architecture, Multi-Module Architecture, Dependency Injection (Dagger), Design Patterns, SOLID</p>
+  <p><b>Networking &amp; Data:</b> Retrofit, OkHttp, GraphQL, Apollo, REST APIs, Room, Firebase</p>
+  <p><b>Testing:</b> Unit Testing, JUnit, MockK, Espresso, UIAutomator, Flank, Firebase Test Lab, UI Test Automation</p>
+  <p><b>AI Engineering:</b> LLM Agents, Model Context Protocol (MCP), Claude Agent SDK, Agent Skills Specification, RAG, Vertex AI, Agent Evaluation &amp; Guardrails, Prompt and Context Engineering</p>
+  <p><b>DevOps &amp; Tooling:</b> CI/CD, GitHub Actions, Bitrise, GitLab CI, Gradle, Git, Docker, Node.js, Style Dictionary, Firebase Performance Monitoring</p>
+  <p><b>Practices:</b> Technical RFCs &amp; ADRs, Architecture Review, Agile, Scrum, Code Review, Technical Mentorship, Performance Optimization</p>
+</section>
+
+<section>
+  <h2>Professional Experience</h2>
+
+  <h3>HungerStation (Delivery Hero) <span>— Senior Mobile Software Engineer</span></h3>
+  <p class="meta">Dubai, UAE | Oct 2023 – Present</p>
+  <h4>AI Engineering &amp; Developer Platform</h4>
+  <ul>
+    <li>Built a re-runnable AI-readiness assessment framework (10 weighted categories, fixed scoring rubric) and applied it
+    across four production codebases in four languages — Kotlin (93 Gradle modules, 4,600+ files), Swift (40+ modules),
+    Flutter, and Go — producing per-repo RFCs and a consolidated recommendation for Engineering Leadership.</li>
+    <li>Documented test-coverage gaps on revenue-critical paths and non-blocking CI guardrails across all four repos, and
+    drove an automated secret-scanning remediation plan.</li>
+    <li>Authored an AI infrastructure audit of the Android and iOS codebases identifying seven systemic risks, including
+    catalogued rule contradictions across three coexisting AI assistants. Measured AI scaffolding overhead at 10–12%
+    of the model context window and proposed consolidating 33 agent skills to a verified catalogue of ~10.</li>
+    <li>Designed the organisation’s agent-skill governance framework (RFC plus five ADRs, all accepted by AI Enablement),
+    defining four CI quality gates across six stack repositories, delivered as reusable GitHub Actions workflows.
+    Established the principle that deterministic checks block merges while model-backed checks advise, with a
+    calibration-gated path to promotion.</li>
+    <li>Architected a Node.js skill installer CLI bringing npm-style reproducibility to AI agent skills across four vendor tools
+    (Claude Code, Cursor, Copilot, Gemini CLI): lockfile pinning to immutable commit SHAs with checksum verification,
+    and partial-clone fetching for offline installs. Selected in-house over two third-party options on documented
+    supply-chain and privacy grounds.</li>
+    <li>Architected a Figma-to-multiplatform design system pipeline for Android, iOS, and Flutter, separating a deterministic
+    token sync (DTCG JSON, Style Dictionary, auto-generated PRs) from AI-assisted component generation, with explicit
+    anti-hallucination controls that fail the run rather than invent values. Authored the InfoSec security review intake
+    and is named on-call owner.</li>
+    <li>Created and presented an internal engineering series on applied AI, covering how LLMs, MCPs, agents, and skills
+    compose as a layered system and comparing agent lifecycle hook patterns across three frameworks.</li>
+  </ul>
+  <h4>Product &amp; Platform Engineering</h4>
+  <ul>
+    <li>Led development of the HungerStation Plus (HPlus) subscription service, driving adoption to 10M+ subscribers and
+    enabling 100M+ subscriber orders, reducing churn and improving customer retention.</li>
+    <li>Owned the Rewards &amp; Loyalty module end to end, designing scalable Android architecture and partnering with
+    product to grow user engagement.</li>
+    <li>Proposed and implemented performance monitoring using Firebase and JankStats to detect and reduce jank frames,
+    measurably improving app responsiveness.</li>
+    <li>Drove multi-module architecture evolution across the Android codebase, establishing clear module boundaries,
+    shared UI testing utilities, and maintainable Gradle build pipelines.</li>
+    <li>Initiated adoption of Flank with Firebase Test Lab to bring test sharding to the Android UI suite, enabling parallel
+    execution across devices, and integrated the runs into Bitrise CI to cut regression feedback time.</li>
+  </ul>
+
+  <h3>Orange Innovation Egypt <span>— Senior Mobile Software Engineer</span></h3>
+  <p class="meta">Cairo, Egypt | Feb 2022 – Sep 2023</p>
+  <ul>
+    <li>Led the Kotlin migration across core Android projects, reducing the legacy Java codebase by 70% and improving
+    maintainability and developer velocity.</li>
+    <li>Delivered Android TV support for Orange Radio, expanding reach to a new platform.</li>
+    <li>Designed and maintained CI/CD pipelines with GitLab CI, cutting release cycle time by 40%.</li>
+    <li>Mentored and onboarded 5+ interns, 3 of whom converted to full-time engineers.</li>
+  </ul>
+
+  <h3>Robusta Studio <span>— Senior Android Software Engineer</span></h3>
+  <p class="meta">Cairo, Egypt | Jan 2019 – Feb 2022</p>
+  <ul>
+    <li>Architected and implemented a white-label e-commerce Android framework powering 10+ client apps and reducing
+    time-to-market by 50%.</li>
+    <li>Introduced modern Android practices including MVVM, GraphQL, and Apollo, improving developer productivity.</li>
+  </ul>
+
+  <h3>Bright Creations <span>— Android Software Engineer</span></h3>
+  <p class="meta">Cairo, Egypt | Aug 2017 – Dec 2018</p>
+  <ul>
+    <li>Delivered multiple native Android applications for enterprise clients under strict quality and deadline requirements.</li>
+  </ul>
+
+  <h3>CAPMAS <span>— Java Developer</span></h3>
+  <p class="meta">Cairo, Egypt | Dec 2016 – Jul 2017</p>
+  <ul>
+    <li>Developed the user interface of a desktop Java application visualizing results of the Egyptian national population survey.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Selected Projects</h2>
+  <ul>
+    <li><b>Mobile Automator</b> (open source, Apache 2.0) — author of a host-agnostic Node.js CLI that lets any AI coding agent
+    author and run mobile UI tests on devices and emulators, separating agent reasoning from deterministic execution
+    and driving devices over MCP. Scenarios are portable JSON matched on visible text and semantic role rather than
+    resource IDs, so one test runs on both Android and iOS. Ships Agent Skills for Claude Code, Cursor, Gemini CLI,
+    Copilot, and OpenAI Agents. <a href="https://github.com/sh3lan93/mobile-automator">github.com/sh3lan93/mobile-automator</a></li>
+    <li><b>AI Pulse</b> — fully local AI news aggregation and scoring dashboard (n8n, Ollama with Mistral 7B and Llama 3 8B,
+    SQLite, Vue 3, Express) with four automated workflows and a calibration feedback loop.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <p><b>B.Sc. in Computer Science — Faculty of Computers and Information, Menofia University, Egypt</b><br>Sep 2011 – Jul 2015</p>
+</section>
+</body>
+</html>
