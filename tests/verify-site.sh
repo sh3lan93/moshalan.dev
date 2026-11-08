@@ -129,7 +129,11 @@ check_posthog() {
 
 check_analytics() {
   local bad=() post
-  node --test "$ROOT/tests/" >"$TMP/node.log" 2>&1 || bad+=("unit tests failed (see node --test tests/)")
+  # Name the file: Node < 21 can't take a directory argument (CI's runner Node is older than local).
+  if ! node --test "$ROOT/tests/analytics.test.mjs" >"$TMP/node.log" 2>&1; then
+    cat "$TMP/node.log" >&2
+    bad+=("unit tests failed (node --test tests/analytics.test.mjs)")
+  fi
   grep -rqE 'js/analytics[^"]*\.js' "$OUT" && bad+=("analytics script loads without an API key")
   if keyed_build; then
     grep -qE 'src="?/js/analytics[^" >]*\.js' "$KOUT/index.html" || bad+=("analytics script missing on home")

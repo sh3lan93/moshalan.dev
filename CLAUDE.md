@@ -20,7 +20,7 @@ HUGO_ENVIRONMENT=production HUGO_ENV=production hugo --gc --minify --baseURL "ht
 # Run the site verification suite (builds into a temp dir; never touches public/ or resources/)
 bash tests/verify-site.sh            # all checks
 bash tests/verify-site.sh urls og    # specific checks
-node --test tests/                   # analytics unit tests (also run by the analytics check)
+node --test tests/analytics.test.mjs # analytics unit tests (also run by the analytics check)
 bash tests/verify-site.sh cutover   # gate: fails if resume, Cal.com or experience roles are unset or DRAFT copy remains (CI runs it)
 
 # Regenerate the share card after changing the positioning line or avatar
@@ -76,7 +76,7 @@ Templates read data with `hugo.Data` (not the deprecated `site.Data`).
 ### Analytics
 PostHog config lives in `hugo.toml` under `[params.analytics.posthog]`. The snippet is in `layouts/_partials/extend_head.html` and only loads when an API key is set. Page views (`capture_pageview: true`) and page leaves are captured; session recording is off.
 
-Custom events come from `assets/js/analytics.js` (loaded only when the API key is set; unit tests in `tests/analytics.test.mjs`, run by `node --test tests/` and by the `analytics` verify check):
+Custom events come from `assets/js/analytics.js` (loaded only when the API key is set; unit tests in `tests/analytics.test.mjs`, run by `node --test tests/analytics.test.mjs` and by the `analytics` verify check):
 - `cta_clicked` {cta, intent, location, link_url, link_text}. Links are classified by **where they point**, not by tags, so nav, theme social icons and links inside posts are covered: `/resume.pdf`, `/experience/`, LinkedIn `/in/` → `hiring`; `/work-with-me/`, cal.com, email on Work with me → `consulting`; GitHub, `/projects/`, other email → `other`. LinkedIn *share* links are ignored. `location` comes from the nearest known container (`home_doors`, `hero`, `nav`, `contact`, `proof`, `article_body`, ...).
 - `service_expanded` {service, intent: consulting, location}: a Work with me service row tapped open on a phone (closing, and desktop's pre-opened rows, don't count).
 - `article_progress` {article_path, title, reading_time_min, percent: 25|50|75|100, seconds} on posts.

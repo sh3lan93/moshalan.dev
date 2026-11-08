@@ -1,5 +1,5 @@
 // Unit tests for the pure decision functions in assets/js/analytics.js.
-// Run: node --test tests/
+// Run: node --test tests/analytics.test.mjs
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
