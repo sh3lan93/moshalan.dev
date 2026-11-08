@@ -7,9 +7,9 @@ author: "Mohamed Shalan"
 description: "Discover more about Mohamed Shalan, a senior mobile engineer working across Android, Flutter, and AI engineering strategy."
 ---
 
-👋 Hi, I'm Mohamed Shalan — a senior mobile software engineer with 9+ years building and scaling native Android apps in **Kotlin**, plus cross-platform work in **Flutter** and **Kotlin Multiplatform**. Over the past year I've also taken on a second, self-directed track: defining how AI coding agents should operate safely inside large, multi-language codebases.
+👋 Hi, I'm Mohamed Shalan — a senior mobile software engineer with 9+ years building and scaling native Android apps in **Kotlin**, plus cross-platform work in **Flutter** and **Kotlin Multiplatform**. Over the past year I've also defined my mobile organization's AI engineering direction: how AI coding agents operate safely inside large, multi-language codebases, written up in 20+ RFCs and ADRs reviewed by AI Enablement, InfoSec, and Engineering Leadership.
 
-I've worked across delivery, telecom, and e-commerce, shipping subscription and rewards products used by millions of people daily — and, more recently, writing the audits, RFCs, and governance frameworks that decide how AI agents are allowed to touch production code.
+I've worked across delivery, telecom, and e-commerce, shipping subscription and rewards products used by millions of people daily (including a subscription service that grew to 10M+ subscribers and 100M+ orders) — and, more recently, writing the audits, RFCs, and governance frameworks that decide how AI agents are allowed to touch production code.
 
 ---
 
@@ -18,6 +18,7 @@ I've worked across delivery, telecom, and e-commerce, shipping subscription and 
 - Architect and build native Android apps with **Jetpack Compose, Coroutines/Flow, and multi-module Gradle architecture**, alongside Flutter and Kotlin Multiplatform for cross-platform delivery
 - Audit codebases for **AI-readiness** — scoring rubrics, test-coverage gaps, and guardrails that decide whether an AI agent can safely work in a given module
 - Design **governance frameworks for AI agent skills** — CI quality gates, versioning, and security review, keeping deterministic checks (which block) separate from model-backed ones (which only advise)
+- Architect **Figma-to-code design system pipelines** for Android, iOS, and Flutter: a deterministic token sync, with AI-assisted component generation that fails the run rather than invent values
 - Build developer tooling that treats **reproducibility as a first-class requirement** — lockfiles, pinned commits, checksum verification — applied to AI agent skills the way npm applies it to packages
 
 ---
@@ -33,7 +34,7 @@ I've worked across delivery, telecom, and e-commerce, shipping subscription and 
 
 ## Current Focus
 
-Most of my day-to-day is still native Android. Alongside that, I've spent the last several months defining a mobile organization's AI engineering direction — auditing AI-readiness across codebases in multiple languages, designing agent-skill governance that CI can actually enforce, and building the tooling to distribute and version those skills safely.
+I'm a senior mobile engineer at HungerStation (Delivery Hero), where I've led product work like the HungerStation Plus subscription and the Rewards & Loyalty module. Over the past year I've also defined the mobile organization's AI engineering direction: auditing AI-readiness across four codebases in four languages (Kotlin, Swift, Flutter, and Go), designing agent-skill governance that CI can actually enforce, and building the tooling to distribute and version those skills safely. The full history is on my [experience](/experience/) page.
 
 ---
 
