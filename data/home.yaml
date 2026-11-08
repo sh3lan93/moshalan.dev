@@ -1,5 +1,4 @@
 # Homepage copy ("Two doors"). The positioning line itself lives in hugo.toml (params.brand.positioning).
-# DRAFT: owner review
 doors:
   - id: hire
     heading: "Hiring a senior or lead mobile engineer?"
