@@ -116,7 +116,9 @@ check_posthog() {
   perl -pi -e 's/apiKey = ""/apiKey = "phc_test"/' "$s/hugo.toml"
   grep -q 'apiKey = "phc_test"' "$s/hugo.toml" || { fail posthog "CI key substitution did not match hugo.toml"; return; }
   if ! build "$s" "$o"; then fail posthog "keyed build failed"; return; fi
-  if grep -qE "posthog\.init\(['\"]phc_test['\"]" "$o/index.html"; then pass posthog; else fail posthog "posthog.init('phc_test' missing"; fi
+  grep -qE "posthog\.init\(['\"]phc_test['\"]" "$o/index.html" || { fail posthog "posthog.init('phc_test' missing"; return; }
+  # page views must be captured (the minifier may print true as !0)
+  if grep -qE "capture_pageview: ?(true|!0)" "$o/index.html"; then pass posthog; else fail posthog "capture_pageview is not true"; fi
 }
 
 check_meta() {

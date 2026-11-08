@@ -68,7 +68,7 @@ Templates read data with `hugo.Data` (not the deprecated `site.Data`).
 - Keep the literal `apiKey = ""` line in `hugo.toml`, otherwise the CI substitution silently does nothing.
 
 ### Analytics
-PostHog config lives in `hugo.toml` under `[params.analytics.posthog]`. The snippet is in `layouts/_partials/extend_head.html` and only loads when an API key is set.
+PostHog config lives in `hugo.toml` under `[params.analytics.posthog]`. The snippet is in `layouts/_partials/extend_head.html` and only loads when an API key is set. Page views (`capture_pageview: true`) and page leaves are captured; session recording is off.
 
 ### PWA
 `static/site.webmanifest` and the icons in `static/` are linked from `extend_head.html` and PaperMod's `[params.assets]`.

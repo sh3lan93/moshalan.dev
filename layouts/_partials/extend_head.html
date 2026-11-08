@@ -5,7 +5,7 @@
     posthog.init('{{ site.Params.analytics.posthog.apiKey }}', {
         api_host: '{{ site.Params.analytics.posthog.host | default "https://us.i.posthog.com" }}',
         ui_host: 'https://us.posthog.com',
-        capture_pageview: false,
+        capture_pageview: true,
         capture_pageleave: true,
         {{- if site.Params.analytics.posthog.enableSessionRecording }}
         session_recording: {
