@@ -15,7 +15,7 @@ DOOR2="Bringing AI agents into your mobile team?"
 EMAIL="mohamed.sh3lan.93@gmail.com"
 LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
 NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
-ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me alerts"
 
 FAILS=0
 pass() { echo "PASS $1"; }
@@ -98,6 +98,20 @@ check_case_study_toggle() {
   else
     fail case_study_toggle "fixture caseStudy post not linked with data-proof=case-study"
   fi
+}
+
+check_alerts() {
+  # GitHub-style callouts (> [!NOTE]) must render as styled boxes, never as literal "[!NOTE]" text.
+  local s="$TMP/site-al" o="$TMP/out-al" h bad=()
+  copy_site "$s"
+  cp "$ROOT/tests/fixtures/callout.md" "$s/content/posts/fixture-callout.md"
+  if ! build "$s" "$o"; then fail alerts "fixture build failed"; return; fi
+  h="$o/posts/fixture-callout/index.html"
+  grep -q '\[!' "$h" && bad+=("literal [!TYPE] marker in output")
+  grep -qE 'class="?brand-alert brand-alert--note' "$h" || bad+=("note callout not styled")
+  grep -qE 'class="?brand-alert brand-alert--warning' "$h" || bad+=("warning callout not styled")
+  grep -q '<blockquote' "$h" || bad+=("plain quote lost")
+  if [ ${#bad[@]} -eq 0 ]; then pass alerts; else fail alerts "${bad[*]}"; fi
 }
 
 check_mermaid() {

@@ -63,6 +63,7 @@ Templates read data with `hugo.Data` (not the deprecated `site.Data`).
 - **Case study:** the newest post with front matter `caseStudy: true` automatically appears in the homepage and Work with me proof rows. The case study never names the current employer (it's described, e.g. "a large delivery platform"). The Experience page names employers normally.
 - **Cover images:** `cover.image: "images/<file>"` with **no leading slash**. Images live in `assets/images/`; a leading slash makes PaperMod skip publishing the image, so the cover and `og:image` 404.
 - **Mermaid:** fenced ```mermaid blocks render through `layouts/_markup/render-codeblock-mermaid.html`. The script is loaded in `extend_head` when the page's raw markdown contains a mermaid block. (PaperMod caches the footer per page kind, so per-page flags don't work there.)
+- **Callouts:** `> [!NOTE]` (also TIP, IMPORTANT, WARNING, CAUTION) renders as a labelled `.brand-alert` box through `layouts/_markup/render-blockquote.html`. The `alerts` check builds `tests/fixtures/callout.md` to guard it.
 - **URLs:** `tests/baseline-urls.txt` lists every URL the pre-PaperMod site served. `check_urls` fails if any of them disappear. Never edit the baseline to make a check pass.
 
 ### Content

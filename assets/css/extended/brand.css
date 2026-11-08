@@ -266,3 +266,23 @@
   .brand-service summary { cursor: default; pointer-events: none; } /* both stay open on desktop */
   .brand-service summary::after, .brand-service[open] summary::after { content: none; }
 }
+
+/* ---- Callouts: "> [!NOTE]" in posts (layouts/_markup/render-blockquote.html) ---- */
+.post-content blockquote.brand-alert {
+  border-inline-start: 4px solid var(--brand-alert-color);
+  background: var(--code-bg);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 12px 16px;
+  color: var(--primary);
+}
+.brand-alert__title {
+  margin: 0 0 4px;
+  font-weight: 700;
+  color: var(--brand-alert-color);
+}
+.brand-alert > :last-child { margin-bottom: 0; }
+.brand-alert--note { --brand-alert-color: #4a86e0; }
+.brand-alert--tip { --brand-alert-color: #1f9d78; }
+.brand-alert--important { --brand-alert-color: #8a63d2; }
+.brand-alert--warning { --brand-alert-color: #c98a12; }
+.brand-alert--caution { --brand-alert-color: #d9534f; }

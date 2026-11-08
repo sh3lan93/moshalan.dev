@@ -1,0 +1,13 @@
+{{- /* GitHub-style callouts: "> [!NOTE]" (also TIP, IMPORTANT, WARNING, CAUTION) render as a labelled box.
+       Plain quotes render as normal blockquotes. Styles: .brand-alert in assets/css/extended/brand.css. */ -}}
+{{- if eq .Type "alert" -}}
+{{- $type := lower .AlertType -}}
+<blockquote class="brand-alert brand-alert--{{ $type }}">
+  <p class="brand-alert__title">{{ with .AlertTitle }}{{ . }}{{ else }}{{ $type | title }}{{ end }}</p>
+  {{ .Text }}
+</blockquote>
+{{- else -}}
+<blockquote>
+  {{ .Text }}
+</blockquote>
+{{- end -}}
