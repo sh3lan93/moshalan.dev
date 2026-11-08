@@ -57,14 +57,14 @@ enableRobotsTXT = true
     text = "Mohamed Shalan"
 
   # Brand values read by the custom homepage and page layouts.
-  # calcomURL and resumePDF stay empty until the owner provides them;
+  # resumePDF stays empty until the owner provides it;
   # their buttons are hidden while empty.
   [params.brand]
     positioning = "Senior mobile engineer helping teams adopt AI agents safely."
     email = "mohamed.sh3lan.93@gmail.com"
     linkedin = "https://www.linkedin.com/in/mohamedsh3lan93/"
     github = "https://github.com/sh3lan93"
-    calcomURL = ""
+    calcomURL = "https://cal.com/mohamed-shalan-gwjgvq/15min"
     resumePDF = ""
 
   [[params.socialIcons]]

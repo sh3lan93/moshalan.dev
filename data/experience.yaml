@@ -1,13 +1,44 @@
-# DRAFT: owner fills roles/dates.
-# The timeline section is hidden while `roles` is empty. Add entries like:
-#   - role: "Senior Android Engineer"
-#     company: "Company name"
-#     start: "2022-03"
-#     end: "present"
-#     highlights:
-#       - "Impact bullet with a number if you have one"
+# DRAFT: owner review of summary + skills (roles come from the resume, 2026-11).
+# Highlights deliberately omit employer security findings from the resume.
 summary: "Senior mobile engineer with 9+ years building and scaling native Android apps in Kotlin, plus cross-platform work in Flutter and Kotlin Multiplatform. I've shipped subscription and rewards products used by millions of people daily across delivery, telecom and e-commerce, and I now also lead how AI coding agents are adopted safely in a mobile organization."
-roles: []
+roles:
+  - role: "Senior Mobile Software Engineer"
+    company: "HungerStation (Delivery Hero)"
+    start: "Oct 2023"
+    end: "Present"
+    highlights:
+      - "Led the HungerStation Plus subscription service, growing it to 10M+ subscribers and 100M+ subscriber orders."
+      - "Built a re-runnable AI-readiness assessment framework and applied it across four production codebases in Kotlin, Swift, Flutter and Go."
+      - "Designed the organization's agent-skill governance framework (RFC plus five ADRs) with four CI quality gates across six repositories."
+      - "Architected a Figma-to-code design system pipeline for Android, iOS and Flutter, with controls that fail the run instead of inventing values."
+  - role: "Senior Mobile Software Engineer"
+    company: "Orange Innovation Egypt"
+    start: "Feb 2022"
+    end: "Sep 2023"
+    highlights:
+      - "Led the Kotlin migration across core Android projects, cutting the legacy Java codebase by 70%."
+      - "Delivered Android TV support for Orange Radio."
+      - "Built GitLab CI pipelines that cut release cycle time by 40%."
+      - "Mentored 5+ interns, 3 of whom joined full-time."
+  - role: "Senior Android Software Engineer"
+    company: "Robusta Studio"
+    start: "Jan 2019"
+    end: "Feb 2022"
+    highlights:
+      - "Architected a white-label e-commerce Android framework powering 10+ client apps, halving time-to-market."
+      - "Introduced MVVM, GraphQL and Apollo across the Android team."
+  - role: "Android Software Engineer"
+    company: "Bright Creations"
+    start: "Aug 2017"
+    end: "Dec 2018"
+    highlights:
+      - "Delivered native Android apps for enterprise clients."
+  - role: "Java Developer"
+    company: "CAPMAS"
+    start: "Dec 2016"
+    end: "Jul 2017"
+    highlights:
+      - "Built the UI of a desktop app visualizing Egypt's national population survey."
 skills:
   - "Kotlin"
   - "Jetpack Compose"
