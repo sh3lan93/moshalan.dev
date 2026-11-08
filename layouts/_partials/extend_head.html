@@ -17,6 +17,13 @@
         {{- end }}
     })
 </script>
+{{- /* Intent clicks (cta_clicked) + article reading (article_progress, article_read) */}}
+{{- with resources.Get "js/analytics.js" | minify | fingerprint }}
+<script defer src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}
+{{- if and .IsPage (eq .Section "posts") }}
+<script type="application/json" id="article-meta">{{ dict "path" .RelPermalink "title" .Title "readingTime" .ReadingTime | jsonify | safeJS }}</script>
+{{- end }}
 {{- end -}}
 {{- /* PWA: manifest + the Apple touch icon sizes LoveIt used to emit (PaperMod only emits the default one) */}}
 <link rel="manifest" href="{{ "site.webmanifest" | absURL }}">

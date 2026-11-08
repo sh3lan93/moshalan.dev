@@ -15,7 +15,7 @@ DOOR2="Bringing AI agents into your mobile team?"
 EMAIL="mohamed.sh3lan.93@gmail.com"
 LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
 NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
-ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics"
 
 FAILS=0
 pass() { echo "PASS $1"; }
@@ -108,17 +108,36 @@ check_mermaid() {
   if [ ${#bad[@]} -eq 0 ]; then pass mermaid; else fail mermaid "${bad[*]}"; fi
 }
 
+KOUT="$TMP/out-ph"
+keyed_build() { # build once with a dummy PostHog key, the way CI injects the real one
+  [ -f "$KOUT/index.html" ] && return 0
+  local s="$TMP/site-ph"
+  copy_site "$s"
+  perl -pi -e 's/apiKey = ""/apiKey = "phc_test"/' "$s/hugo.toml"
+  grep -q 'apiKey = "phc_test"' "$s/hugo.toml" || return 2
+  build "$s" "$KOUT"
+}
+
 check_posthog() {
   if grep -rq 'posthog.init' "$OUT"; then fail posthog "loaded without an API key"; return; fi
-  local s="$TMP/site-ph" o="$TMP/out-ph"
-  copy_site "$s"
-  # same substitution the CI workflow performs
-  perl -pi -e 's/apiKey = ""/apiKey = "phc_test"/' "$s/hugo.toml"
-  grep -q 'apiKey = "phc_test"' "$s/hugo.toml" || { fail posthog "CI key substitution did not match hugo.toml"; return; }
-  if ! build "$s" "$o"; then fail posthog "keyed build failed"; return; fi
+  keyed_build; case $? in 0) ;; 2) fail posthog "CI key substitution did not match hugo.toml"; return ;; *) fail posthog "keyed build failed"; return ;; esac
+  local o="$KOUT"
   grep -qE "posthog\.init\(['\"]phc_test['\"]" "$o/index.html" || { fail posthog "posthog.init('phc_test' missing"; return; }
   # page views must be captured (the minifier may print true as !0)
   if grep -qE "capture_pageview: ?(true|!0)" "$o/index.html"; then pass posthog; else fail posthog "capture_pageview is not true"; fi
+}
+
+check_analytics() {
+  local bad=() post
+  node --test "$ROOT/tests/" >"$TMP/node.log" 2>&1 || bad+=("unit tests failed (see node --test tests/)")
+  grep -rqE 'js/analytics[^"]*\.js' "$OUT" && bad+=("analytics script loads without an API key")
+  if keyed_build; then
+    grep -qE 'src="?/js/analytics[^" >]*\.js' "$KOUT/index.html" || bad+=("analytics script missing on home")
+    post="$KOUT/posts/code-review-in-ai-era/index.html"
+    grep -qE 'id="?article-meta' "$post" || bad+=("article meta missing on a post")
+    grep -qE 'id="?article-meta' "$KOUT/work-with-me/index.html" && bad+=("article meta on a non-post page")
+  else bad+=("keyed build failed"); fi
+  if [ ${#bad[@]} -eq 0 ]; then pass analytics; else fail analytics "${bad[*]}"; fi
 }
 
 check_meta() {
