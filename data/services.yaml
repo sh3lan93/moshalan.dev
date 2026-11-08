@@ -20,14 +20,14 @@ services:
       - "Agent-driven mobile UI testing where it fits (built on Mobile Automator)"
     outcome: "Working agent workflows in your repos, documented so your team owns and evolves them without me."
 
-# "Why me" numbers (from the resume; no employer names)
+# "Why me" numbers (from the resume; no employer names). Prefer results over counts of documents.
 stats:
   - value: "10M+"
     label: "subscribers on a product I led"
   - value: "4"
     label: "languages audited for AI-readiness"
-  - value: "20+"
-    label: "RFCs & ADRs reviewed by leadership"
+  - value: "40%"
+    label: "shorter release cycles from CI/CD I built"
 
 # How it works. `optional: true` draws the step with a dashed outline.
 steps:

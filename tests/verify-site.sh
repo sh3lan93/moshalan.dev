@@ -217,7 +217,7 @@ check_work_with_me() {
   n=$(grep -oE '<details[^>]*data-service=' "$h" | wc -l | tr -d ' ')
   [ "$n" = 2 ] || bad+=("expected 2 tap-to-open services, found $n")
   [ "$(grep -oE '<summary' "$h" | wc -l | tr -d ' ')" -ge 2 ] || bad+=("service summaries missing")
-  for v in "10M+" "20+"; do grep -q "class=\"\{0,1\}brand-stat__value\"\{0,1\}>$v<" "$h" || bad+=("stat $v missing"); done
+  for v in "10M+" "40%"; do grep -q "class=\"\{0,1\}brand-stat__value\"\{0,1\}>$v<" "$h" || bad+=("stat $v missing"); done
   [ "$(grep -oE 'class="?brand-step[ ">]' "$h" | wc -l | tr -d ' ')" = 3 ] || bad+=("expected 3 steps")
   grep -qE 'data-optional' "$h" || bad+=("no step marked optional")
   bar=$(grep -oE '<div class="?brand-sticky.*' "$h" | sed 's#</div>.*##')
