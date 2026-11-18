@@ -1,11 +1,14 @@
 ---
 title: "Where Your Flutter CI Time Goes: How We Cut a 47-Minute Pipeline to 12"
 date: 2026-11-09T12:00:00+04:00
-draft: true
+draft: false
 author: "Mohamed Shalan"
 description: ""
 tags: [Flutter, CI/CD, DevX]
 categories: [Flutter]
+cover:
+  image: "images/flutter-ci-time.webp"
+  alt: "Bar chart: one 46-minute CI job above five parallel shards that finish in about 11 minutes"
 ---
 
 AI is speeding up how fast we write code, but are your PRs still stuck in the slow lane?
