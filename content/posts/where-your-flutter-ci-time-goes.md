@@ -25,7 +25,7 @@ We run on GitHub Actions, but none of the fixes depend on it, so I'll skip the Y
 
 Every PR has to pass two required checks before merging: Coding style and Tests. Over the last 30 days, the median run time for Tests was 47 minutes, and for Coding style it was 14 minutes.
 
-![](/images/flutter-ci-time/20261118074847.png)
+![Timeline of one PR: Tests take 47 minutes and set the time to green, while Coding style finishes in 14 minutes and waits](/images/flutter-ci-time/20261118074847.png)
 
 Of our 1,450 test files, only the 466 golden test files needed a Mac. We ran the whole suite on expensive Mac runners anyway, just to keep those 466 happy, and paid for it in both time and money.
 
@@ -82,7 +82,7 @@ We checked before building anything. A throwaway branch ran both halves in paral
 
 All 3,016 non-golden tests passed on Linux (980 files, since one file holds several tests). No test failed only on Linux.
 
-![](/images/flutter-ci-time/20261118211022.png)
+![Before Fix 1, one Mac job runs every test in 46 minutes. After it, a Mac job runs the 466 golden files in 13 minutes while a 2-core Linux job runs the other 980 files in 47 minutes](/images/flutter-ci-time/20261118211022.png)
 
 On its own, this saved nothing. Time to green is the slower of the two jobs, and the Linux half took 47 minutes, about the 46 we started with. A 2-core Linux runner was also about 1.9 times slower per file than the Mac: 2.8 seconds per file against 1.5.
 
@@ -109,7 +109,7 @@ It sorts the list, then keeps every Nth line, where N is the number of shards, s
 
 Think of dealing cards: each shard gets one file in turn, and the deal wraps around. With 3 shards and 12 files, shard 0 gets files 1, 4, 7 and 10, shard 1 gets 2, 5, 8 and 11, and shard 2 gets 3, 6, 9 and 12. Every file lands in exactly one shard.
 
-![](/images/flutter-ci-time/20261118214613.png)
+![Twelve sorted test files from the auth, checkout and menu folders dealt in turn to 3 shards, so the 4 slow checkout files spread across all shards](/images/flutter-ci-time/20261118214613.png)
 
 We deal the files out instead of handing each shard a block (files 1 to 4, then 5 to 8, and so on) because the list is sorted by path, so neighbouring files usually sit in the same folder. Files in one folder tend to be similarly slow, and a block could put all the slow ones on one shard. Dealing spreads every folder across all the shards.
 
@@ -129,7 +129,7 @@ For the Linux files, we projected that 8 shards would finish in about 8 minutes 
 
 For the golden files, the problem was on the Mac side. In Fix 1, a single Mac job took 13 minutes, so even if every other job were instant, that one job would keep the check above 12 minutes. We split the golden files across 2 Mac jobs, which now finish in about 8 and a half minutes each.
 
-![](/images/flutter-ci-time/20261118214905.png)
+![Time to green: 46 minutes before, 47 after Fix 1, and 13 after splitting Linux into 8 shards, just over the 12-minute target](/images/flutter-ci-time/20261118214905.png)
 
 A final Linux job depends on every shard. It merges the coverage files and reports one aggregate check, still named `tests`. That is the only required check, so branch protection rules don't change when the shard count does.
 
@@ -170,7 +170,7 @@ With the timings file, the slowest shard sat between 1.02 and 1.11 times the mea
 
 I can't say how many of the minutes between 13 and 11 came from the timings and how many from going from 8 shards to 10, because both changed in the same runs.
 
-![](/images/flutter-ci-time/20261118220220.png)
+![Final layout: 2 Mac golden shards at 8m26 and 8m16 and 10 Linux shards at 7m29 to 9m53 run in parallel, then a coverage merge, for about 11 minutes to green against 46 before](/images/flutter-ci-time/20261118220220.png)
 
 #### Fix 4: Stop installing iOS tools the tests don't use  
 
@@ -184,7 +184,7 @@ The fix is one line in the pipeline configuration:
 flutter pub get
 ```
 
-![](/images/flutter-ci-time/20261118221014.png)
+![Time to green as each fix is added: 46 minutes before, about 40 with Fix 4, 47 with Fix 1, 13 with Fix 2, and about 11 with Fix 3](/images/flutter-ci-time/20261118221014.png)
 
 ### What didn't work
 - **Flutter's `--total-shards`.** It sounds like the right tool for this problem, but it splits the tests inside each file, so every shard still compiles and boots all 1,450 files. Locally, shard 0 of 4 took 21 min 05 s, longer than the whole suite run unsharded (12 min 09 s).
@@ -197,7 +197,7 @@ flutter pub get
 
 ### Result 
 
-![](/images/flutter-ci-time/20261118222023.png)
+![Results: time to green down 76%, cost per run down 45% from $4.59 to $2.51, monthly cost down 36%, CPU core-minutes up 26%. After the change, each run costs $1.94 on Mac and $0.57 on Linux](/images/flutter-ci-time/20261118222023.png)
 
 | Metric                           | Before       | After                     |
 | -------------------------------- | ------------ | ------------------------- |
