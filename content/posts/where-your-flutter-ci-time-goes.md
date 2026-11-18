@@ -3,7 +3,7 @@ title: "Where Your Flutter CI Time Goes: How We Cut a 47-Minute Pipeline to 12"
 date: 2026-11-09T12:00:00+04:00
 draft: false
 author: "Mohamed Shalan"
-description: ""
+description: "Our Flutter tests took 47 minutes per PR. We measured where the time went, moved non-golden tests to Linux, and sharded by file to get under 12 minutes."
 tags: [Flutter, CI/CD, DevX]
 categories: [Flutter]
 cover:
