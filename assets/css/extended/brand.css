@@ -315,3 +315,9 @@
   .brand-appreciate-label { display: none; }
 }
 @media print { .brand-appreciate { display: none; } }
+
+/* Markdown images carry width/height attributes (layouts/_markup/render-image.html);
+   keep their aspect ratio when max-width shrinks them. */
+.post-content img {
+  height: auto;
+}

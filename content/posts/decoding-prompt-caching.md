@@ -150,7 +150,7 @@ flowchart TB
     style LEG fill:none,stroke:none
 ```
 
-You can configure your cache's TTL from Claude Code. Check it [here](https://code.claude.com/docs/en/prompt-caching#choose-the-ttl-yourself).
+You can configure your cache's TTL from Claude Code. The docs explain [how to choose the TTL yourself](https://code.claude.com/docs/en/prompt-caching#choose-the-ttl-yourself).
 
 ## Actions that invalidate the cache
 - Switching models. 

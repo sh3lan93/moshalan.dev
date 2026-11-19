@@ -54,7 +54,7 @@ hugo new posts/my-new-post.md
 | Brand CSS (neutral, uses PaperMod color variables) | `assets/css/extended/brand.css` |
 | PostHog, Mermaid loader, PWA links | `layouts/_partials/extend_head.html` |
 | Structured data (JSON-LD), overrides PaperMod's | `layouts/_partials/templates/schema_json.html` |
-| `<head>`: PaperMod's file with only the `<title>` line changed | `layouts/_partials/head.html` |
+| `<head>`: PaperMod's file with only the `<title>` and description lines changed | `layouts/_partials/head.html` (tag/category descriptions come from `layouts/_partials/brand/list-description.html`) |
 | `/llms.txt` and the Markdown copy of each post | `layouts/home.llms.txt`, `layouts/single.markdown.md` (output formats and cascades in `hugo.toml`) |
 | Share card source / output | `assets/og/card.html` → `static/images/og-default.png` |
 | Public resume source / output | `assets/resume/resume.html` → `static/resume.pdf` (public data only: no phone, nationality, visa, or employer security findings; the `resume` check enforces it) |
@@ -70,7 +70,8 @@ Templates read data with `hugo.Data` (not the deprecated `site.Data`).
 - **Callouts:** `> [!NOTE]` (also TIP, IMPORTANT, WARNING, CAUTION) renders as a labelled `.brand-alert` box through `layouts/_markup/render-blockquote.html`. The `alerts` check builds `tests/fixtures/callout.md` to guard it.
 - **Structured data:** one `Person` node (`https://moshalan.dev/#person`) is the author and publisher on every page. Home is `WebSite` + `Person`; About and Experience are `ProfilePage`; Work with me emits one `Service` per `data/services.yaml` entry; Projects is a `CollectionPage`; only posts are `BlogPosting`. The employer (`worksFor`) appears on the Experience page only. The `schema` check (`tests/schema-check.mjs`) guards this.
 - **Search and AI crawlers:** tag and category pages are `noindex` and left out of the sitemap (a `cascade` in `hugo.toml`); they still exist. `/llms.txt` is generated from the data files and lists each post's Markdown copy (`/posts/<slug>/index.md`). The `sitemap` and `llms` checks guard this.
-- **Head override:** after updating the PaperMod pin, re-copy the theme's `head.html` and re-apply the `<title>` line; the `head_override` check fails until the two files differ only there.
+- **Head override:** after updating the PaperMod pin, re-copy the theme's `head.html` and re-apply the `<title>` and description lines; the `head_override` check fails until the two files differ only there.
+- **Post markup:** `layouts/_markup/render-image.html` adds `width`/`height` to Markdown images (`.post-content img { height: auto }` in `brand.css` keeps the ratio), and `layouts/_partials/anchored_headings.html` makes heading anchors unfocusable. Posts start their sections at `##`, never `###`. The `post_markup` check guards all three.
 - **URLs:** `tests/baseline-urls.txt` lists every URL the pre-PaperMod site served. `check_urls` fails if any of them disappear. Never edit the baseline to make a check pass.
 
 ### Content

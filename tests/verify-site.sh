@@ -15,7 +15,7 @@ DOOR2="Bringing AI agents into your mobile team?"
 EMAIL="mohamed.sh3lan.93@gmail.com"
 LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
 NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
-ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me alerts appreciate schema sitemap llms head_override"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me alerts appreciate schema sitemap llms head_override post_markup"
 
 FAILS=0
 pass() { echo "PASS $1"; }
@@ -299,12 +299,25 @@ check_llms() { # /llms.txt plus a Markdown copy of every post, linked from the p
   if [ ${#bad[@]} -eq 0 ]; then pass llms; else fail llms "${bad[*]}"; fi
 }
 
-check_head_override() { # layouts/_partials/head.html must stay PaperMod's head with only <title> changed
-  local d; d=$(diff "$ROOT/themes/PaperMod/layouts/_partials/head.html" "$ROOT/layouts/_partials/head.html" | grep '^[<>]' | grep -vc '<title>')
+check_head_override() { # layouts/_partials/head.html must stay PaperMod's head; only the <title> and description lines differ
+  local d; d=$(diff "$ROOT/themes/PaperMod/layouts/_partials/head.html" "$ROOT/layouts/_partials/head.html" | grep '^[<>]' | grep -vcE '<title>|name="description"')
   local bad=()
-  [ "$d" -eq 0 ] || bad+=("head.html differs from the theme beyond <title>; re-copy it after a theme update")
+  [ "$d" -eq 0 ] || bad+=("head.html differs from the theme beyond <title> and description; re-copy it after a theme update")
   grep -oE '<title>[^<]*' "$OUT/about/index.html" | grep -qx '<title>About | Mohamed Shalan' || bad+=("page title suffix")
   if [ ${#bad[@]} -eq 0 ]; then pass head_override; else fail head_override "${bad[*]}"; fi
+}
+
+check_post_markup() { # render hooks: image dimensions, unfocusable heading anchors, no skipped heading level
+  local bad=() f d
+  for d in "$OUT"/posts/*/; do
+    f="$d/index.html"; [ -f "$f" ] || continue
+    is_alias "$f" && continue
+    grep -oE '<img [^>]*loading="?lazy[^>]*>' "$f" | grep -v 'width=' | grep -q . && bad+=("$(basename "$d"): image without width")
+    grep -oE '<a hidden class="?anchor[^>]*>' "$f" | grep -v 'tabindex="\{0,1\}-1' | grep -q . && bad+=("$(basename "$d"): focusable heading anchor")
+    [ "$(sed 's/.*class="\{0,1\}post-content//' "$f" | grep -oE '<h[2-6]' | head -1)" = "<h3" ] && bad+=("$(basename "$d"): first heading is h3, not h2")
+  done
+  grep -q 'name=description content="[0-9]* posts\{0,1\} by' "$OUT/tags/ai/index.html" || bad+=("tag page description")
+  if [ ${#bad[@]} -eq 0 ]; then pass post_markup; else fail post_markup "${bad[*]}"; fi
 }
 
 check_cutover() {

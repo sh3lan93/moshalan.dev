@@ -21,7 +21,7 @@ This post is for engineers who maintain a Flutter pipeline, on any CI provider, 
 
 We run on GitHub Actions, but none of the fixes depend on it, so I'll skip the YAML and stick to the approach.
 
-### Problem 
+## Problem 
 
 Every PR has to pass two required checks before merging: Coding style and Tests. Over the last 30 days, the median run time for Tests was 47 minutes, and for Coding style it was 14 minutes.
 
@@ -29,7 +29,7 @@ Every PR has to pass two required checks before merging: Coding style and Tests.
 
 Of our 1,450 test files, only the 466 golden test files needed a Mac. We ran the whole suite on expensive Mac runners anyway, just to keep those 466 happy, and paid for it in both time and money.
 
-### Measure before changing anything 
+## Measure before changing anything 
 
 We pulled every non-skipped test run from a 30-day window through our CI provider's API, then read the duration of each job and step. Every provider exposes this data through an API or an export. For each run, you need the ID, the outcome, and the start and end time of every job and step.
 
@@ -58,7 +58,7 @@ The test step was the obvious target, but the numbers didn't explain why it took
 
 Most of the 36 minutes went to starting up 1,450 times, not to running the tests themselves.
 
-### The approach 
+## The approach 
 
 Two rules: 
 1. Fix the biggest step first.
@@ -66,9 +66,9 @@ Two rules:
 
 We also ruled out deleting tests to make CI faster. App quality stays where it is.
 
-### The fixes ranked by impact
+## The fixes ranked by impact
 
-#### Fix 1: Run the tests that don't need macOS on Linux 
+### Fix 1: Run the tests that don't need macOS on Linux 
 
 The whole suite ran on a Mac because 466 files needed one. The other 980 didn't. We rendered the golden reference images on macOS, and Linux draws text slightly differently, so the golden tests would fail on Linux. No other test should care which operating system it runs on.
 
@@ -88,7 +88,7 @@ On its own, this saved nothing. Time to green is the slower of the two jobs, and
 
 What it gave us was a smaller problem. The Mac job dropped from 46 minutes to 13, and the only work left on a Mac was work that needs one. The Linux half became the new bottleneck, and the golden half now had a 13-minute floor. Both fed into Fix 2.
 
-#### Fix 2: Shard by file
+### Fix 2: Shard by file
 
 After Fix 1, the longest job was 47 minutes, so the next step was spreading that work across machines.
 
@@ -133,7 +133,7 @@ For the golden files, the problem was on the Mac side. In Fix 1, a single Mac jo
 
 A final Linux job depends on every shard. It merges the coverage files and reports one aggregate check, still named `tests`. That is the only required check, so branch protection rules don't change when the shard count does.
 
-#### Fix 3: Balance the shards by recorded time
+### Fix 3: Balance the shards by recorded time
 
 An even split by file count assumes every file takes the same time, and they don't. At 1.12 times the mean, our slowest shard was already close, so the question was how much of the remaining gap recorded timings could close.
 
@@ -172,7 +172,7 @@ I can't say how many of the minutes between 13 and 11 came from the timings and 
 
 ![Final layout: 2 Mac golden shards at 8m26 and 8m16 and 10 Linux shards at 7m29 to 9m53 run in parallel, then a coverage merge, for about 11 minutes to green against 46 before](/images/flutter-ci-time/20261118220220.png)
 
-#### Fix 4: Stop installing iOS tools the tests don't use  
+### Fix 4: Stop installing iOS tools the tests don't use  
 
 The prepare step ran a shared script that does `pub get`, `flutter precache --ios`, and `pod install --repo-update`. In one sampled log, `pod install` alone took 4 min 29 s, mostly refreshing the CocoaPods spec repository. Over the 30-day window, the step used 1,947 Mac minutes.
 
@@ -186,7 +186,7 @@ flutter pub get
 
 ![Time to green as each fix is added: 46 minutes before, about 40 with Fix 4, 47 with Fix 1, 13 with Fix 2, and about 11 with Fix 3](/images/flutter-ci-time/20261118221014.png)
 
-### What didn't work
+## What didn't work
 - **Flutter's `--total-shards`.** It sounds like the right tool for this problem, but it splits the tests inside each file, so every shard still compiles and boots all 1,450 files. Locally, shard 0 of 4 took 21 min 05 s, longer than the whole suite run unsharded (12 min 09 s).
 
 - **Bundling test files.** This was the fastest idea we tried, and the one I would most like to ship. We shelved it because it made the results unreliable.
@@ -195,7 +195,7 @@ flutter pub get
   That still wasn't enough. We ran the tests in random order on CI across 5 seeds, and 44 distinct files (3.0%) failed. Every seed found new ones, and adding files to an ignore list never converged. A required check that fails on different files from run to run blocks merges for reasons unrelated to the change, so we kept the slower setup, where a green check means the tests passed.
   I still don't know why two of those bundled files time out. One of them makes an unmocked POST request, which looks like the same race, but we never traced it. We also found several tests that pass only because an unmocked request happens to fail at a lucky moment. Those are going to the teams that own them.
 
-### Result 
+## Result 
 
 ![Results: time to green down 76%, cost per run down 45% from $4.59 to $2.51, monthly cost down 36%, CPU core-minutes up 26%. After the change, each run costs $1.94 on Mac and $0.57 on Linux](/images/flutter-ci-time/20261118222023.png)
 

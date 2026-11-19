@@ -182,7 +182,7 @@ That's what less gives you: clarity.
 
 ### The Transformation at a Glance
 
-![v1.0 vs v2.0](/images/easy-analytics-annotations/v1.0-vs-v2.0.png)
+![Four v1.0 problems mapped to their v2.0 fixes: the 860-line file became 7 helpers, the Compose module was removed, tests were added, and config was unified](/images/easy-analytics-annotations/v1.0-vs-v2.0.png)
 
 ## Your Turn
 

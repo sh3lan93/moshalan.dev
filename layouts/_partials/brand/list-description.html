@@ -1,0 +1,10 @@
+{{- /* Meta description for tag and category pages, which have none of their own
+       (without it all of them repeat the site description). Empty for other pages. */ -}}
+{{- $d := "" -}}
+{{- if eq .Kind "term" -}}
+  {{- $n := len .Pages -}}
+  {{- $d = printf "%d %s by %s filed under %s." $n (cond (eq $n 1) "post" "posts") site.Params.author .Title -}}
+{{- else if eq .Kind "taxonomy" -}}
+  {{- $d = printf "All %s used on %s's blog." (lower .Title) site.Params.author -}}
+{{- end -}}
+{{- return $d -}}

@@ -46,7 +46,7 @@ On Sundays, the system collects the week's top-rated articles and identifies 3â€
 
 The result: I open a dashboard with my morning coffee, scan the enriched feed, and I'm caught up in 10 minutes. No algorithm. No ads. No infinite scroll.
 
-![AI Pulse Architecture](/images/ai-pulse/ai-pulse-architecture.png)
+![Architecture diagram: GitHub, Reddit and RSS feeds flow through n8n ingestion into SQLite, then a Mistral 7B scoring pass and a Llama 3 8B summary pass feed the Vue 3 dashboard views](/images/ai-pulse/ai-pulse-architecture.png)
 
 ## The Stack: Everything Local, Everything Free
 

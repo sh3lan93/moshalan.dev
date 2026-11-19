@@ -1,0 +1,7 @@
+{{- /* Overrides PaperMod's partial: same "#" anchor after each heading, plus tabindex="-1".
+       The anchor is aria-hidden, so it must not be reachable by keyboard either. */ -}}
+{{ . | replaceRE
+    "(<h[1-6] id=\"([^\"]+)\".+)(</h[1-6]+>)"
+    "${1}<a hidden class=\"anchor\" aria-hidden=\"true\" tabindex=\"-1\" href=\"#${2}\">#</a>${3}"
+    | safeHTML
+}}
