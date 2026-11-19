@@ -1,0 +1,134 @@
+{{- /* Structured data (JSON-LD). Overrides PaperMod's templates/schema_json.html, which
+       labels the site an Organization and every single page a BlogPosting.
+
+       One Person node (@id .../#person) is the author and publisher everywhere:
+         home                -> WebSite + Person
+         about, experience   -> ProfilePage (experience also names the employer)
+         work-with-me        -> WebPage + one Service per data/services.yaml entry
+         projects            -> CollectionPage listing data/projects.yaml
+         posts               -> BlogPosting
+       The employer appears only on the Experience page: the case study and the
+       consulting pages never name it. The `schema` check guards all of this. */ -}}
+{{- $brand := site.Params.brand -}}
+{{- $home := site.Home.Permalink -}}
+{{- $personID := printf "%s#person" $home -}}
+{{- $siteID := printf "%s#website" $home -}}
+{{- $personRef := dict "@id" $personID -}}
+{{- $exp := hugo.Data.experience -}}
+{{- $slug := "" -}}
+{{- with .File }}{{ $slug = .ContentBaseName }}{{ end -}}
+
+{{- $person := dict
+    "@type" "Person"
+    "@id" $personID
+    "name" site.Params.author
+    "url" $home
+    "description" $brand.positioning
+    "sameAs" (slice $brand.linkedin $brand.github)
+    "knowsAbout" $exp.skills -}}
+{{- with index $exp.roles 0 }}{{ $person = merge $person (dict "jobTitle" .role) }}{{ end -}}
+{{- with resources.Get "images/avatar.png" }}{{ $person = merge $person (dict "image" .Permalink) }}{{ end -}}
+
+{{- $nodes := slice -}}
+
+{{- if .IsHome -}}
+  {{- $nodes = $nodes | append (dict
+      "@type" "WebSite"
+      "@id" $siteID
+      "name" site.Params.author
+      "url" $home
+      "description" site.Params.description
+      "inLanguage" site.Language.Lang
+      "publisher" $personRef) -}}
+  {{- $nodes = $nodes | append $person -}}
+
+{{- else if or .IsPage .IsSection -}}
+  {{- /* Breadcrumbs: Home > ancestors > this page */ -}}
+  {{- $crumbs := slice -}}
+  {{- range .Ancestors.Reverse -}}
+    {{- $crumbs = $crumbs | append (dict "name" (cond .IsHome "Home" .LinkTitle) "item" .Permalink) -}}
+  {{- end -}}
+  {{- $crumbs = $crumbs | append (dict "name" .LinkTitle "item" .Permalink) -}}
+  {{- $items := slice -}}
+  {{- range $i, $c := $crumbs -}}
+    {{- $items = $items | append (merge (dict "@type" "ListItem" "position" (add $i 1)) $c) -}}
+  {{- end -}}
+  {{- $nodes = $nodes | append (dict "@type" "BreadcrumbList" "itemListElement" $items) -}}
+
+  {{- $page := dict
+      "@id" (printf "%s#webpage" .Permalink)
+      "url" .Permalink
+      "name" .Title
+      "inLanguage" site.Language.Lang
+      "isPartOf" (dict "@id" $siteID) -}}
+  {{- with .Description }}{{ $page = merge $page (dict "description" .) }}{{ end -}}
+
+  {{- if and .IsPage (eq .Section "posts") -}}
+    {{- $image := "" -}}
+    {{- with .Params.cover.image }}{{ $image = . | absURL }}{{ else }}
+      {{- with index (partial "templates/_funcs/get-page-images" .) 0 }}{{ $image = .Permalink }}{{ end -}}
+    {{- end -}}
+    {{- $post := dict
+        "@type" "BlogPosting"
+        "@id" (printf "%s#article" .Permalink)
+        "headline" (.Title | plainify)
+        "description" (.Description | default .Summary | plainify)
+        "keywords" (.Params.keywords | default .Params.tags | default slice)
+        "wordCount" .WordCount
+        "timeRequired" (printf "PT%dM" .ReadingTime)
+        "inLanguage" site.Language.Lang
+        "datePublished" (.PublishDate.Format "2006-01-02T15:04:05Z07:00")
+        "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+        "author" (dict "@type" "Person" "@id" $personID "name" site.Params.author "url" $home)
+        "publisher" $personRef
+        "mainEntityOfPage" .Permalink
+        "isPartOf" (dict "@id" $siteID) -}}
+    {{- with $image }}{{ $post = merge $post (dict "image" .) }}{{ end -}}
+    {{- with .Params.categories }}{{ $post = merge $post (dict "articleSection" (index . 0)) }}{{ end -}}
+    {{- $nodes = $nodes | append $post -}}
+
+  {{- else if in (slice "about" "experience") $slug -}}
+    {{- $me := $person -}}
+    {{- if eq $slug "experience" -}}
+      {{- range first 1 (where $exp.roles "end" "Present") -}}
+        {{- $me = merge $me (dict "worksFor" (dict "@type" "Organization" "name" .company)) -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $nodes = $nodes | append (merge $page (dict "@type" "ProfilePage" "mainEntity" $personRef)) | append $me -}}
+
+  {{- else if eq .Layout "work-with-me" -}}
+    {{- $nodes = $nodes | append (merge $page (dict "@type" "WebPage" "about" $personRef)) -}}
+    {{- range hugo.Data.services.services -}}
+      {{- $nodes = $nodes | append (dict
+          "@type" "Service"
+          "@id" (printf "%s#%s" $.Permalink .id)
+          "name" .title
+          "serviceType" .title
+          "description" (printf "%s %s" .summary .outcome)
+          "url" $.Permalink
+          "provider" $personRef
+          "audience" (dict "@type" "Audience" "audienceType" "Mobile engineering teams adopting AI coding agents")) -}}
+    {{- end -}}
+
+  {{- else if eq .Layout "projects" -}}
+    {{- $list := slice -}}
+    {{- range $i, $p := hugo.Data.projects -}}
+      {{- $url := $p.url -}}
+      {{- if not $url }}{{ with $p.post }}{{ with site.GetPage . }}{{ $url = .Permalink }}{{ end }}{{ end }}{{ end -}}
+      {{- $item := dict "@type" "SoftwareSourceCode" "name" $p.name "description" $p.description "author" $personRef -}}
+      {{- with $url }}{{ $item = merge $item (dict "url" .) }}{{ end -}}
+      {{- if strings.Contains (or $p.url "") "github.com" }}{{ $item = merge $item (dict "codeRepository" $p.url) }}{{ end -}}
+      {{- $list = $list | append (dict "@type" "ListItem" "position" (add $i 1) "item" $item) -}}
+    {{- end -}}
+    {{- $nodes = $nodes | append (merge $page (dict
+        "@type" "CollectionPage"
+        "mainEntity" (dict "@type" "ItemList" "itemListElement" $list))) -}}
+
+  {{- else -}}
+    {{- $nodes = $nodes | append (merge $page (dict "@type" (cond .IsSection "CollectionPage" "WebPage"))) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $nodes }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" . | jsonify | safeJS }}</script>
+{{- end -}}

@@ -1,0 +1,40 @@
+{{- $brand := site.Params.brand -}}
+# {{ site.Params.author }}
+
+> {{ $brand.positioning }} {{ hugo.Data.experience.summary }}
+
+Personal site and engineering blog of {{ site.Params.author }}. Posts are first-hand write-ups of mobile engineering (Android, Kotlin Multiplatform, Flutter), CI, and working with AI coding agents. Each post has a Markdown copy at its URL plus `index.md`.
+
+## About
+
+{{ range slice "about" "experience" "projects" "work-with-me" -}}
+{{- with site.GetPage . -}}
+- [{{ .Title }}]({{ .Permalink }}): {{ .Description }}
+{{ end -}}
+{{- end }}
+## Services
+
+{{ range hugo.Data.services.services -}}
+- [{{ .title }}]({{ "work-with-me/" | absURL }}): {{ .summary }} Outcome: {{ .outcome }}
+{{ end }}
+## Writing
+
+{{ range where site.RegularPages "Section" "posts" -}}
+- [{{ .Title }}]({{ with .OutputFormats.Get "markdown" }}{{ .Permalink }}{{ else }}{{ .Permalink }}{{ end }}) ({{ .Date.Format "2006-01-02" }}): {{ .Description }}
+{{ end }}
+## Projects
+
+{{ range hugo.Data.projects -}}
+{{- $url := .url -}}
+{{- if not $url }}{{ with .post }}{{ with site.GetPage . }}{{ $url = .Permalink }}{{ end }}{{ end }}{{ end -}}
+- [{{ .name }}]({{ $url }}): {{ .description }}
+{{ end }}
+## Contact
+
+- Email: {{ $brand.email }}
+- [LinkedIn]({{ $brand.linkedin }})
+- [GitHub]({{ $brand.github }})
+{{- with $brand.calcomURL }}
+- [Book a 15-minute intro call]({{ . }})
+{{- end }}
+- [RSS feed]({{ "index.xml" | absURL }})

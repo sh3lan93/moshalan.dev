@@ -9,7 +9,37 @@ enableRobotsTXT = true
   pagerSize = 10
 
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML", "RSS", "llms"]
+
+# llms: /llms.txt, a plain-text guide to the site for AI assistants (layouts/home.llms.txt).
+# markdown: a clean .md copy of each post at /posts/<slug>/index.md (layouts/single.markdown.md).
+[outputFormats]
+  [outputFormats.llms]
+    mediaType = "text/plain"
+    baseName = "llms"
+    isPlainText = true
+    notAlternative = true
+  [outputFormats.markdown]
+    mediaType = "text/markdown"
+    baseName = "index"
+    isPlainText = true
+
+# Posts also publish a Markdown copy.
+[[cascade]]
+  outputs = ["html", "markdown"]
+  [cascade.target]
+    kind = "page"
+    path = "{/posts/**}"
+
+# Tag and category pages stay reachable (tests/baseline-urls.txt) but are thin lists,
+# so they are left out of the sitemap and marked noindex.
+[[cascade]]
+  [cascade.sitemap]
+    disable = true
+  [cascade.params]
+    robotsNoIndex = true
+  [cascade.target]
+    kind = "{taxonomy,term}"
 
 # Nav order is part of the brand spec: Writing · Projects · Work with me · About
 [menu]

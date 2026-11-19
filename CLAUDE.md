@@ -53,6 +53,9 @@ hugo new posts/my-new-post.md
 | Appreciate button under posts (key in `[params.brand] appreciateKey`; empty hides it) | `layouts/_partials/extend_post_content.html` (PaperMod hook, posts only; the `appreciate` check guards it) |
 | Brand CSS (neutral, uses PaperMod color variables) | `assets/css/extended/brand.css` |
 | PostHog, Mermaid loader, PWA links | `layouts/_partials/extend_head.html` |
+| Structured data (JSON-LD), overrides PaperMod's | `layouts/_partials/templates/schema_json.html` |
+| `<head>`: PaperMod's file with only the `<title>` line changed | `layouts/_partials/head.html` |
+| `/llms.txt` and the Markdown copy of each post | `layouts/home.llms.txt`, `layouts/single.markdown.md` (output formats and cascades in `hugo.toml`) |
 | Share card source / output | `assets/og/card.html` → `static/images/og-default.png` |
 | Public resume source / output | `assets/resume/resume.html` → `static/resume.pdf` (public data only: no phone, nationality, visa, or employer security findings; the `resume` check enforces it) |
 
@@ -65,6 +68,9 @@ Templates read data with `hugo.Data` (not the deprecated `site.Data`).
 - **Cover images:** `cover.image: "images/<file>"` with **no leading slash**. Images live in `assets/images/`; a leading slash makes PaperMod skip publishing the image, so the cover and `og:image` 404.
 - **Mermaid:** fenced ```mermaid blocks render through `layouts/_markup/render-codeblock-mermaid.html`. The script is loaded in `extend_head` when the page's raw markdown contains a mermaid block. (PaperMod caches the footer per page kind, so per-page flags don't work there.)
 - **Callouts:** `> [!NOTE]` (also TIP, IMPORTANT, WARNING, CAUTION) renders as a labelled `.brand-alert` box through `layouts/_markup/render-blockquote.html`. The `alerts` check builds `tests/fixtures/callout.md` to guard it.
+- **Structured data:** one `Person` node (`https://moshalan.dev/#person`) is the author and publisher on every page. Home is `WebSite` + `Person`; About and Experience are `ProfilePage`; Work with me emits one `Service` per `data/services.yaml` entry; Projects is a `CollectionPage`; only posts are `BlogPosting`. The employer (`worksFor`) appears on the Experience page only. The `schema` check (`tests/schema-check.mjs`) guards this.
+- **Search and AI crawlers:** tag and category pages are `noindex` and left out of the sitemap (a `cascade` in `hugo.toml`); they still exist. `/llms.txt` is generated from the data files and lists each post's Markdown copy (`/posts/<slug>/index.md`). The `sitemap` and `llms` checks guard this.
+- **Head override:** after updating the PaperMod pin, re-copy the theme's `head.html` and re-apply the `<title>` line; the `head_override` check fails until the two files differ only there.
 - **URLs:** `tests/baseline-urls.txt` lists every URL the pre-PaperMod site served. `check_urls` fails if any of them disappear. Never edit the baseline to make a check pass.
 
 ### Content

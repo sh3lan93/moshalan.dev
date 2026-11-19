@@ -15,7 +15,7 @@ DOOR2="Bringing AI agents into your mobile team?"
 EMAIL="mohamed.sh3lan.93@gmail.com"
 LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
 NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
-ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me alerts appreciate"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me alerts appreciate schema sitemap llms head_override"
 
 FAILS=0
 pass() { echo "PASS $1"; }
@@ -263,6 +263,48 @@ check_appreciate() {
     grep -rq 'appreciate-button.com/widget.js' "$o" && bad+=("widget loaded with an empty key")
   else bad+=("empty-key build failed"); fi
   if [ ${#bad[@]} -eq 0 ]; then pass appreciate; else fail appreciate "${bad[*]}"; fi
+}
+
+check_schema() { # JSON-LD: one Person everywhere, right type per page, employer only on Experience
+  local out; out=$(node "$ROOT/tests/schema-check.mjs" "$OUT" 2>&1)
+  if [ -z "$out" ]; then pass schema; else fail schema "$(echo "$out" | tr '\n' ';')"; fi
+}
+
+check_sitemap() { # pages and posts only; tag/category pages are noindex and left out
+  local bad=() locs; locs=$(grep -oE '<loc>[^<]+' "$OUT/sitemap.xml" | sed 's/<loc>//')
+  echo "$locs" | grep -qE '/(tags|categories)/' && bad+=("taxonomy URLs in sitemap")
+  for p in / /posts/ /about/ /experience/ /projects/ /work-with-me/ /posts/decoding-prompt-caching/; do
+    echo "$locs" | grep -qx "$BASE_URL$p" || bad+=("missing $p")
+  done
+  grep -q 'name=robots content="noindex' "$OUT/tags/ai/index.html" || bad+=("tag page not noindex")
+  grep -q 'name=robots content="index, follow"' "$OUT/posts/decoding-prompt-caching/index.html" || bad+=("post not indexable")
+  grep -q "^Sitemap: $BASE_URL/sitemap.xml" "$OUT/robots.txt" || bad+=("robots.txt has no sitemap line")
+  if [ ${#bad[@]} -eq 0 ]; then pass sitemap; else fail sitemap "${bad[*]}"; fi
+}
+
+check_llms() { # /llms.txt plus a Markdown copy of every post, linked from the post's <head>
+  local bad=() f="$OUT/llms.txt" d slug
+  [ -f "$f" ] || { fail llms "no llms.txt"; return; }
+  grep -qF "$POSITIONING" "$f" || bad+=("positioning line")
+  grep -q "^## Services" "$f" || bad+=("services section")
+  grep -q "HungerStation" "$f" && bad+=("names the employer")
+  for d in "$OUT"/posts/*/; do
+    slug=$(basename "$d"); [ "$slug" = page ] && continue
+    [ -s "$d/index.md" ] || { bad+=("no index.md for $slug"); continue; }
+    grep -qF "$BASE_URL/posts/$slug/index.md" "$f" || bad+=("$slug not in llms.txt")
+    grep -q "^- Canonical URL: $BASE_URL/posts/$slug/$" "$d/index.md" || bad+=("$slug canonical line")
+    grep -q 'type=text/markdown' "$d/index.html" || bad+=("$slug has no markdown alternate link")
+  done
+  [ -e "$OUT/about/index.md" ] && bad+=("non-post page got a markdown copy")
+  if [ ${#bad[@]} -eq 0 ]; then pass llms; else fail llms "${bad[*]}"; fi
+}
+
+check_head_override() { # layouts/_partials/head.html must stay PaperMod's head with only <title> changed
+  local d; d=$(diff "$ROOT/themes/PaperMod/layouts/_partials/head.html" "$ROOT/layouts/_partials/head.html" | grep '^[<>]' | grep -vc '<title>')
+  local bad=()
+  [ "$d" -eq 0 ] || bad+=("head.html differs from the theme beyond <title>; re-copy it after a theme update")
+  grep -oE '<title>[^<]*' "$OUT/about/index.html" | grep -qx '<title>About | Mohamed Shalan' || bad+=("page title suffix")
+  if [ ${#bad[@]} -eq 0 ]; then pass head_override; else fail head_override "${bad[*]}"; fi
 }
 
 check_cutover() {
