@@ -287,7 +287,10 @@
 .brand-alert--warning { --brand-alert-color: #c98a12; }
 .brand-alert--caution { --brand-alert-color: #d9534f; }
 
-/* Appreciate button under posts (layouts/_partials/extend_post_content.html) */
+/* Appreciate button (layouts/_partials/extend_post_content.html).
+   Phones/tablets: inline after the post body. 1024px+: a fixed rail in the left gutter,
+   just outside PaperMod's content column. Icon colours come from the button's dashboard
+   settings (the widget sets them inline); only size and count colour follow the page. */
 .brand-appreciate {
   display: flex;
   align-items: center;
@@ -299,3 +302,16 @@
   --appreciate-size: 1.75rem;
   --appreciate-count: var(--secondary);
 }
+@media (min-width: 1024px) {
+  .brand-appreciate {
+    position: fixed;
+    top: 50%;
+    left: calc(50% - var(--main-width) / 2 - 96px);
+    transform: translateY(-50%);
+    z-index: 10;
+    flex-direction: column;
+    margin: 0;
+  }
+  .brand-appreciate-label { display: none; }
+}
+@media print { .brand-appreciate { display: none; } }
