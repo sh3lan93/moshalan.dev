@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { classify, crossedMarks, isRead } = require("../assets/js/analytics.js");
+const { classify, crossedMarks, isRead, appreciateCapture } = require("../assets/js/analytics.js");
 
 const ORIGIN = "https://moshalan.dev";
 const c = (href, page = "/") => classify(href, page, ORIGIN);
@@ -57,4 +57,28 @@ test("isRead needs the end plus 40% of reading time", () => {
   assert.equal(isRead(true, 47, 2), false);  // too fast: skimmed
   assert.equal(isRead(false, 999, 2), false); // never reached the end
   assert.equal(isRead(true, 0, 0), true);    // no reading time known
+});
+
+test("appreciate: a confirmed click becomes article_appreciated", () => {
+  const counts = { totalCount: 12, maxClicks: 5, visitorCount: 1, visitorRemaining: 4, maxed: false };
+  assert.deepEqual(appreciateCapture("appreciate:change", counts), {
+    event: "article_appreciated",
+    props: { total_count: 12, visitor_count: 1, visitor_remaining: 4, maxed: false, first: true },
+  });
+  const later = appreciateCapture("appreciate:change", { ...counts, visitorCount: 5, visitorRemaining: 0, maxed: true });
+  assert.equal(later.props.first, false);
+  assert.equal(later.props.maxed, true);
+});
+
+test("appreciate: errors are captured by code only", () => {
+  assert.deepEqual(appreciateCapture("appreciate:error", { code: "origin_not_allowed", message: "x" }),
+    { event: "appreciate_error", props: { code: "origin_not_allowed" } });
+  assert.deepEqual(appreciateCapture("appreciate:error", null), { event: "appreciate_error", props: { code: "unknown" } });
+});
+
+test("appreciate: ready, burst and maxed are not captured", () => {
+  // ready = a page view; burst fires before the server counts it (or on a spent button); maxed rides on change
+  for (const t of ["appreciate:ready", "appreciate:burst", "appreciate:maxed", "click"]) {
+    assert.equal(appreciateCapture(t, { totalCount: 1 }), null);
+  }
 });

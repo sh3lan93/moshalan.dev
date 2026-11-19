@@ -15,7 +15,7 @@ DOOR2="Bringing AI agents into your mobile team?"
 EMAIL="mohamed.sh3lan.93@gmail.com"
 LINKEDIN="https://www.linkedin.com/in/mohamedsh3lan93/"
 NAV_EXPECTED="/posts/ /projects/ /work-with-me/ /about/"
-ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me alerts"
+ALL_CHECKS="urls og home case_study_toggle mermaid posthog meta no_old_email no_dead_links pages rss no_internal_notes resume analytics work_with_me alerts appreciate"
 
 FAILS=0
 pass() { echo "PASS $1"; }
@@ -242,6 +242,27 @@ check_work_with_me() {
   echo "$bar" | grep -q 'cal.com' || bad+=("booking bar has no Cal.com link")
   echo "$bar" | grep -q "mailto:$EMAIL" || bad+=("booking bar has no email link")
   if [ ${#bad[@]} -eq 0 ]; then pass work_with_me; else fail work_with_me "${bad[*]}"; fi
+}
+
+check_appreciate() {
+  # With the configured key: widget on posts only, after the content. With an empty key: nowhere.
+  local bad=() s="$TMP/site-ab" o="$TMP/out-ab" post="posts/code-review-in-ai-era/index.html" key
+  key=$(sed -nE 's/^ *appreciateKey = "([^"]*)".*/\1/p' "$ROOT/hugo.toml")
+  if [ -z "$key" ]; then bad+=("appreciateKey unset in hugo.toml")
+  elif [[ $key != pk_* ]]; then bad+=("appreciateKey must be a public pk_ key, never the apr_sk_ site secret")
+  else
+    grep -qE "widget\.js\"? data-key=\"?$key" "$OUT/$post" || bad+=("widget missing on a post")
+    grep -qE 'class="?brand-appreciate' "$OUT/$post" || bad+=("wrapper missing on a post")
+    for p in about/index.html work-with-me/index.html index.html posts/index.html; do
+      grep -q 'appreciate-button.com/widget.js' "$OUT/$p" && bad+=("widget on $p")
+    done
+  fi
+  copy_site "$s"
+  perl -pi -e 's/appreciateKey = "[^"]*"/appreciateKey = ""/' "$s/hugo.toml"
+  if build "$s" "$o"; then
+    grep -rq 'appreciate-button.com/widget.js' "$o" && bad+=("widget loaded with an empty key")
+  else bad+=("empty-key build failed"); fi
+  if [ ${#bad[@]} -eq 0 ]; then pass appreciate; else fail appreciate "${bad[*]}"; fi
 }
 
 check_cutover() {

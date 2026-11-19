@@ -286,3 +286,16 @@
 .brand-alert--important { --brand-alert-color: #8a63d2; }
 .brand-alert--warning { --brand-alert-color: #c98a12; }
 .brand-alert--caution { --brand-alert-color: #d9534f; }
+
+/* Appreciate button under posts (layouts/_partials/extend_post_content.html) */
+.brand-appreciate {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+  color: var(--secondary);
+}
+.brand-appreciate appreciate-button {
+  --appreciate-size: 1.75rem;
+  --appreciate-count: var(--secondary);
+}

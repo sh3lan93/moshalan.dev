@@ -65,6 +65,10 @@ enableRobotsTXT = true
     github = "https://github.com/sh3lan93"
     calcomURL = "https://cal.com/mohamed-shalan-gwjgvq/15min"
     resumePDF = "/resume.pdf"
+    # Appreciate button under each post (https://appreciate-button.com). Public pk_ key,
+    # not a secret; its button's allowed origins must list https://moshalan.dev
+    # (and http://localhost:1313 for local preview). Empty hides the button.
+    appreciateKey = "pk_4c2276e4f7daf3361738763a1bc9ef3a"
 
   [[params.socialIcons]]
     name = "github"

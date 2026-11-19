@@ -41,8 +41,23 @@
     return !!reachedEnd && seconds >= readingMinutes * 60 * READ_SHARE;
   }
 
+  // Map an appreciate-button DOM event to { event, props } or null when it isn't tracked.
+  // Only server-confirmed clicks (change) and failures (error) are sent: ready is a page view,
+  // burst fires before the server counts the click (and on spent buttons), maxed rides on change.
+  function appreciateCapture(type, detail) {
+    var d = detail || {};
+    if (type === "appreciate:change") {
+      return { event: "article_appreciated", props: {
+        total_count: d.totalCount, visitor_count: d.visitorCount,
+        visitor_remaining: d.visitorRemaining, maxed: !!d.maxed, first: d.visitorCount === 1
+      } };
+    }
+    if (type === "appreciate:error") return { event: "appreciate_error", props: { code: d.code || "unknown" } };
+    return null;
+  }
+
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { classify: classify, crossedMarks: crossedMarks, isRead: isRead };
+    module.exports = { classify: classify, crossedMarks: crossedMarks, isRead: isRead, appreciateCapture: appreciateCapture };
     return;
   }
 
@@ -83,6 +98,14 @@
   if (!metaEl) return;
   var meta;
   try { meta = JSON.parse(metaEl.textContent); } catch (e) { return; }
+
+  // Appreciate button (posts only): its events bubble out of the shadow DOM to document
+  ["appreciate:change", "appreciate:error"].forEach(function (type) {
+    document.addEventListener(type, function (ev) {
+      var hit = appreciateCapture(type, ev.detail);
+      if (hit && ph()) ph().capture(hit.event, props(hit.props));
+    });
+  });
 
   var sent = new Set(), seconds = 0, reachedEnd = false, readSent = false;
   function props(extra) {

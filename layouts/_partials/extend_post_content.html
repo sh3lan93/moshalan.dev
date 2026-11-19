@@ -1,0 +1,10 @@
+{{- /* Appreciate button after the post body (PaperMod hook; runs on every single page, so posts only).
+       Items are keyed by page URL (origin + path), so a post keeps its count while its permalink stays. */}}
+{{- with site.Params.brand.appreciateKey }}
+{{- if and $.IsPage (eq $.Section "posts") }}
+<div class="brand-appreciate">
+  <span class="brand-appreciate-label">Found this useful?</span>
+  <script src="https://appreciate-button.com/widget.js" data-key="{{ . }}" data-label="Appreciate this post" async></script>
+</div>
+{{- end }}
+{{- end }}

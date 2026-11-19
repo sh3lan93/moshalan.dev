@@ -50,6 +50,7 @@ hugo new posts/my-new-post.md
 | Projects page cards | `data/projects.yaml` |
 | Homepage layout | `layouts/home.html` + `layouts/_partials/brand/*.html` |
 | Page layouts | `layouts/{work-with-me,experience,projects}.html` (chosen by `layout:` front matter) |
+| Appreciate button under posts (key in `[params.brand] appreciateKey`; empty hides it) | `layouts/_partials/extend_post_content.html` (PaperMod hook, posts only; the `appreciate` check guards it) |
 | Brand CSS (neutral, uses PaperMod color variables) | `assets/css/extended/brand.css` |
 | PostHog, Mermaid loader, PWA links | `layouts/_partials/extend_head.html` |
 | Share card source / output | `assets/og/card.html` → `static/images/og-default.png` |
@@ -82,6 +83,7 @@ Custom events come from `assets/js/analytics.js` (loaded only when the API key i
 - `service_expanded` {service, intent: consulting, location}: a Work with me service row tapped open on a phone (closing, and desktop's pre-opened rows, don't count).
 - `article_progress` {article_path, title, reading_time_min, percent: 25|50|75|100, seconds} on posts.
 - `article_read` {..., seconds}: reached the end of the post AND visible time >= 40% of Hugo's reading time.
+- `article_appreciated` {article_path, title, reading_time_min, total_count, visitor_count, visitor_remaining, maxed, first}: a server-confirmed appreciate-button click (`appreciate:change`). `first` = this visitor's first appreciation of the post. `appreciate_error` {..., code} (e.g. `origin_not_allowed`) flags a misconfigured button. `ready`, `burst` and `maxed` are deliberately not sent.
 - Post pages carry `<script id="article-meta">` JSON (path, title, readingTime) from `extend_head.html`.
 - Scroll handling is throttled with a timer, not requestAnimationFrame (paused frames would stall it).
 
